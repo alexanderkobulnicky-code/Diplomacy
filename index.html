@@ -56,7 +56,7 @@
     <section class="side-section"><div class="section-kicker">ORDERS FOR <span id="powerTitle">AUSTRIA-HUNGARY</span></div><div class="section-intro">Select a unit to write its orders. Unassigned units will hold.</div><div id="unitList" class="unit-list"></div></section>
     <section class="side-section editor-panel" id="editorPanel"><div class="section-kicker">ORDER DESK</div><div id="editor"></div></section>
     <section class="advance-section"><div class="progress-label" id="ordersCount">0 of 22 units ordered</div><button id="advanceBtn" class="advance-button">Resolve Spring 1901 <span>→</span></button><div class="advance-footnote" id="advanceHint">Unassigned units hold. This button resolves all seven powers simultaneously.</div></section>
-    <section class="side-section fine-print"><div class="section-kicker">THIS BUILD</div><p>Orders: hold, move, support hold, support move. Automatic support cuts, bounces, and dislodgement; retreats, fall turns, and winter builds/disbands are supported.</p><p><strong>Not yet implemented:</strong> convoy orders. The map is a schematic prototype and some intricate rules still need additional testing. Suitable for experimentation, not tournament adjudication.</p></section>
+    <section class="side-section fine-print"><div class="section-kicker">THIS BUILD</div><p>Orders: hold, move, move by convoy, fleet convoy, support hold, support move. A convoy requires one army and a connected chain of sea fleets, each issuing the matching convoy order. Retreats and winter adjustments are supported.</p><p><strong>Experimental:</strong> complex circular convoy dependencies and other intricate rulings need further verification against the official examples. Suitable for experimentation, not tournament adjudication.</p></section>
    </aside>
   </div>
   <footer>Diplomacy is a classic board game designed by Allan B. Calhamer. This independent, unofficial prototype is not affiliated with its publisher. No AI service or account is required.</footer>
@@ -64,11 +64,11 @@
  <dialog id="coastDialog" aria-labelledby="coastDialogTitle"><div class="dialog-inner"><div class="dialog-top"><div><div class="section-kicker">FLEET MOVEMENT</div><h2 id="coastDialogTitle">Choose a coast</h2></div><button class="dialog-close" id="closeCoast" aria-label="Cancel">×</button></div><p id="coastExplanation">Select the destination coast for your fleet.</p><div id="coastChoices" class="coast-choices"></div></div></dialog>
  <dialog id="helpDialog"><div class="dialog-inner"><div class="dialog-top"><div><div class="section-kicker">FIELD GUIDE</div><h2>How to play this prototype</h2></div><button class="dialog-close" id="closeHelp" aria-label="Close">×</button></div>
   <p><strong>1. Choose a power.</strong> The seven power tabs show their supply-center and unit counts. At the start, the official 1901 units are deployed.</p>
-  <p><strong>2. Give orders.</strong> Select a unit and choose Hold, Move, Support hold, or Support move. Alternatively, click a unit on the map and then a highlighted adjacent province to order a move. Repeat for the other powers. You can leave units unassigned: they hold.</p>
+  <p><strong>2. Give orders.</strong> Select a unit and choose Hold, Move, Convoy move (army), Convoy (sea fleet), Support hold, or Support move. Alternatively, click a unit on the map and then a highlighted province to order an ordinary move. Issue convoy moves from the order desk. Repeat for the other powers. You can leave units unassigned: they hold.</p>
   <p><strong>3. Resolve.</strong> Press the large button to process every country's orders simultaneously. The after-action report shows outcomes. If any units are dislodged, enter retreats; otherwise the game advances to the next phase.</p>
-  <p><strong>4. Continue.</strong> Fall supply-center capture and winter builds/disbands are implemented. Convoy orders are not yet available, so this is an early prototype rather than a complete game.</p>
+  <p><strong>4. Continue.</strong> Fall supply-center capture and winter builds/disbands are implemented. Sea fleets can convoy armies to coastal provinces, including over multisea chains. A dislodged fleet breaks its convoy route unless another valid route survives.</p>
   <p><strong>5. Keep your game.</strong> Autosave stores the position on this device. Export a JSON backup to preserve it or import one later.</p>
-  <div class="rule-note">Switzerland is impassable. Rome and Venice share a regular land border; armies can move directly between them. After each winter, non-supply-center land adopts the last occupant’s color unless adjacent to land shaded or owned by another power. This color has no rule effect. The NC / SC / EC badges mark separate fleet-access coasts of St. Petersburg, Spain and Bulgaria. Province labels are abbreviated on the map. Hover or tap to select a province and read its full name in the order editor.</div>
+  <div class="rule-note">Switzerland is impassable. Rome and Venice share a regular land border; armies can move directly between them. After each winter, non-supply-center land adopts the last occupant’s color unless adjacent to land shaded or owned by another power. This color has no rule effect. Convoys need an army order to move by convoy and matching orders from every fleet in a sea-route chain. The NC / SC / EC badges mark separate fleet-access coasts of St. Petersburg, Spain and Bulgaria. Province labels are abbreviated on the map. Hover or tap to select a province and read its full name in the order editor.</div>
   <button id="startBtn" class="advance-button">Enter the map <span>→</span></button></div></dialog>
  <script>
 // A hand-drawn schematic atlas for standard Diplomacy (1901), not a facsimile of the published map.
@@ -306,22 +306,62 @@ const SWITZERLAND_POLYGON = [[561.0,543.0],[579.0,533.0],[599.0,538.0],[615.0,55
 
 </script>
  <script>
-// Rules engine for hold/move/support (including support cuts, bounces,
-// head-to-head battles, cycles, retreats, and winter adjustments).
-// Deliberate prototype limitation: fleets cannot yet issue convoy orders.
+// Movement adjudication, including sea-fleet convoy chains. A convoy is a
+// synchronized order by an army and every fleet along at least one sea route.
+// In unusual cyclical dependency cases the Szykman-style fallback fails the
+// affected convoyed attacks rather than allowing a circular success claim.
 function unique(a){return [...new Set(a)]}
 function legalSupportLocations(unit){return destinations(unit)}
+function isSeaFleet(game,unit){return unit?.type==='f' && PROVINCES[unit.at]?.kind==='w';}
+function seaFleetMap(game){return Object.fromEntries(game.units.filter(u=>isSeaFleet(game,u)).map(u=>[u.at,u]));}
+function seaTouchesLand(sea,land){return (FLEET_GRAPH[sea]||[]).some(n=>toProvince(n)===land);}
+function coastalLand(land){return PROVINCES[land] && PROVINCES[land].kind!=='w' && SEAS.some(sea=>seaTouchesLand(sea,land));}
+function hasConvoyPath(game,from,to,fleetFilter,requiredSea=null){
+ if(from===to || !coastalLand(from) || !coastalLand(to))return false;
+ const fleetBySea=seaFleetMap(game);
+ const eligible=new Set(Object.keys(fleetBySea).filter(s=>fleetFilter(fleetBySea[s])));
+ const starts=[...eligible].filter(s=>seaTouchesLand(s,from));
+ // Include a seen-required flag to support route testing through one specific fleet.
+ const queue=starts.map(sea=>({sea,through:sea===requiredSea}));
+ const seen=new Set(queue.map(p=>p.sea+'|'+p.through));
+ for(let i=0;i<queue.length;i++){
+  const here=queue[i];
+  if(seaTouchesLand(here.sea,to) && (!requiredSea||here.through))return true;
+  for(const next of FLEET_GRAPH[here.sea]||[]){
+   if(!eligible.has(next))continue;
+   const through=here.through||next===requiredSea,key=next+'|'+through;
+   if(!seen.has(key)){seen.add(key);queue.push({sea:next,through});}
+  }
+ }
+ return false;
+}
+function possibleConvoyDestinations(game,army){
+ if(army.type!=='a'||!coastalLand(army.at))return [];
+ return Object.values(PROVINCES).filter(p=>p.kind!=='w'&&p.id!==army.at&&coastalLand(p.id)
+  &&hasConvoyPath(game,army.at,p.id,()=>true)).map(p=>p.id);
+}
+function allMoveChoices(game,unit){
+ const ordinary=destinations(unit).map(to=>({kind:'move',to}));
+ if(unit.type==='a')ordinary.push(...possibleConvoyDestinations(game,unit).map(to=>({kind:'move',to,via:'convoy'})));
+ return ordinary;
+}
 function availableOrders(game,unit){
  const occupancy=Object.fromEntries(game.units.map(u=>[u.at,u]));
- const options=[{kind:'hold'}];
- for(const to of destinations(unit)) options.push({kind:'move',to});
+ const options=[{kind:'hold'},...allMoveChoices(game,unit)];
+ if(isSeaFleet(game,unit))for(const army of game.units.filter(a=>a.type==='a')){
+  for(const to of possibleConvoyDestinations(game,army)){
+   if(hasConvoyPath(game,army.at,to,()=>true,unit.at))options.push({kind:'convoy',target:army.id,to});
+  }
+ }
  for(const to of legalSupportLocations(unit)){
   const candidate=occupancy[toProvince(to)];
-  if(candidate && candidate.id!==unit.id && (unit.type==='a' || candidate.type==='a' || unitNode(candidate)===to)) options.push({kind:'support-hold',target:candidate.id});
+  if(candidate && candidate.id!==unit.id && (unit.type==='a' || candidate.type==='a' || unitNode(candidate)===to))options.push({kind:'support-hold',target:candidate.id});
  }
  for(const candidate of game.units){
-  if(candidate.id===unit.id) continue;
-  for(const to of destinations(candidate)){
+  if(candidate.id===unit.id)continue;
+  // The support is for an attack on a province; it isn't important whether
+  // the supported army arrived there over land or by convoy.
+  for(const to of unique(allMoveChoices(game,candidate).map(o=>o.to))){
    if(legalSupportLocations(unit).some(dest=>dest===to || (toProvince(dest)===toProvince(to) && (unit.type==='a' || candidate.type==='a')))){
     options.push({kind:'support-move',target:candidate.id,to});
    }
@@ -332,121 +372,142 @@ function availableOrders(game,unit){
 function resolveMovement(game){
  const units=game.units, byId=Object.fromEntries(units.map(u=>[u.id,u]));
  const occupies=Object.fromEntries(units.map(u=>[u.at,u]));
- const submitted=game.orders||{}, orders={};
- const invalid=[];
+ const submitted=game.orders||{}, orders={}, invalid=[];
  for(const u of units){
   const o=submitted[u.id]||{kind:'hold'};
   const allowed=availableOrders(game,u);
-  const valid=allowed.some(allowedOrder=>allowedOrder.kind===o.kind && (allowedOrder.to||null)===(o.to||null) && (allowedOrder.target||null)===(o.target||null));
+  const valid=allowed.some(a=>a.kind===o.kind && (a.to||null)===(o.to||null) && (a.target||null)===(o.target||null) && (a.via||null)===(o.via||null));
   orders[u.id]=valid?{...o}:{kind:'hold'};
-  if(!valid) invalid.push(`${u.power.toUpperCase()} ${u.type.toUpperCase()} ${display(u.at)}: illegal order becomes HOLD`);
+  if(!valid)invalid.push(`${u.power.toUpperCase()} ${u.type.toUpperCase()} ${display(u.at)}: illegal order becomes HOLD`);
  }
- // An order to support an army that isn't actually moving there contributes no strength.
- const supportList=units.filter(u=>orders[u.id].kind.startsWith('support')).filter(u=>{
-  const o=orders[u.id], target=byId[o.target];
-  if(!target)return false;
-  if(o.kind==='support-move')return orders[target.id].kind==='move' && orders[target.id].to===o.to;
-  return orders[target.id].kind!=='move';
- });
- const moveUnits=units.filter(u=>orders[u.id].kind==='move');
+ const convoyArmies=units.filter(u=>orders[u.id].kind==='move'&&orders[u.id].via==='convoy');
  const sameSet=(a,b)=>a.size===b.size&&[...a].every(v=>b.has(v));
- // Dislodged attackers do not cut support. Repeat until this is self-consistent.
- let dislodged=new Set(), outcome=null, activeSupports=[];
- for(let iteration=0;iteration<20;iteration++){
-  activeSupports=supportList.filter(s=>{
-   const o=orders[s.id];
-   if(dislodged.has(s.id))return false;
-   return !moveUnits.some(attacker=>{
-    if(attacker.power===s.power || dislodged.has(attacker.id)) return false;
-    const attack=orders[attacker.id];
-    if(toProvince(attack.to)!==s.at)return false;
-    // Attack from province the support is directed against doesn't cut it.
-    if(o.kind==='support-move' && attacker.at===toProvince(o.to))return false;
-    return true;
-   });
+ function computeRound(dislodged,forcedFailure){
+  const convoyActive=new Set(convoyArmies.filter(a=>!forcedFailure.has(a.id) && hasConvoyPath(game,a.at,orders[a.id].to,f=>{
+   const o=orders[f.id];return !dislodged.has(f.id) && o.kind==='convoy' && o.target===a.id && o.to===orders[a.id].to;
+  })).map(u=>u.id));
+  const activeMove=u=>orders[u.id].kind==='move' && (orders[u.id].via!=='convoy' || convoyActive.has(u.id));
+  // A dislodged attacker cannot cut support or contest its destination.
+  const moves=units.filter(u=>activeMove(u) && !dislodged.has(u.id));
+  const supports=units.filter(u=>orders[u.id].kind.startsWith('support')).filter(u=>{
+   const o=orders[u.id], target=byId[o.target];if(!target)return false;
+   if(o.kind==='support-move')return activeMove(target)&&orders[target.id].to===o.to;
+   return orders[target.id].kind!=='move';
   });
-  const attackers={};
-  const attackStrength={};
-  const defenseStrength={};
+  const activeSupports=supports.filter(u=>!dislodged.has(u.id)&&!moves.some(attacker=>{
+   if(attacker.power===u.power)return false;
+   const a=orders[attacker.id],o=orders[u.id];
+   if(toProvince(a.to)!==u.at)return false;
+   if(o.kind==='support-move' && attacker.at===toProvince(o.to))return false;
+   return true;
+  }));
+  const attackers={},attackStrength={},defenseStrength={};
   for(const u of units){
-   if(orders[u.id].kind==='move'){
+   if(moves.includes(u)){
     const to=toProvince(orders[u.id].to);
-    (attackers[to] ||= []).push(u);
-    attackStrength[u.id]=1+activeSupports.filter(s=>orders[s.id].kind==='support-move' && orders[s.id].target===u.id).length;
+    (attackers[to]||=[]).push(u);
+    attackStrength[u.id]=1+activeSupports.filter(s=>orders[s.id].kind==='support-move'&&orders[s.id].target===u.id).length;
    }
-   defenseStrength[u.id]=1+activeSupports.filter(s=>orders[s.id].kind==='support-hold' && orders[s.id].target===u.id).length;
+   defenseStrength[u.id]=1+activeSupports.filter(s=>orders[s.id].kind==='support-hold'&&orders[s.id].target===u.id).length;
   }
-  // Only the unique strongest incoming attack can capture a space.
-  const winner={}; const standoffs=new Set();
+  const winner={},standoffs=new Set();
   for(const [province,arr] of Object.entries(attackers)){
-   const highest=Math.max(...arr.map(a=>attackStrength[a.id]));
-   const leaders=arr.filter(a=>attackStrength[a.id]===highest);
+   const high=Math.max(...arr.map(u=>attackStrength[u.id]));
+   const leaders=arr.filter(u=>attackStrength[u.id]===high);
    if(leaders.length===1)winner[province]=leaders[0];
    else standoffs.add(province);
   }
-  const moveSuccess={}; const inProgress=new Set();
+  const moveSuccess={},inProgress=new Set();
   function succeeds(u){
    if(Object.hasOwn(moveSuccess,u.id))return moveSuccess[u.id];
-   if(inProgress.has(u.id))return true; // unopposed rotation of 3+ units is allowed
-   if(orders[u.id].kind!=='move')return false;
-   const to=toProvince(orders[u.id].to), enemy=occupies[to], power=attackStrength[u.id];
-   if(!winner[to] || winner[to].id!==u.id) return moveSuccess[u.id]=false;
-   if(!enemy) return moveSuccess[u.id]=true;
-   const opposing=orders[enemy.id];
-   // Equal-strength head-to-head moves bounce. A 2-cycle cannot rotate.
-   if(opposing.kind==='move' && toProvince(opposing.to)===u.at){
+   if(!activeMove(u)||dislodged.has(u.id))return false;
+   if(inProgress.has(u.id))return true; // Rotations of 3+ units, and convoyed exchanges, may succeed.
+   const to=toProvince(orders[u.id].to),enemy=occupies[to],strength=attackStrength[u.id];
+   if(winner[to]?.id!==u.id)return moveSuccess[u.id]=false;
+   if(!enemy)return moveSuccess[u.id]=true;
+   const opposite=orders[enemy.id];
+   // Ordinary attacks that exchange places head-to-head bounce unless one
+   // overpowers the other. A genuine sea convoy can exchange places instead.
+   if(activeMove(enemy) && toProvince(opposite.to)===u.at && orders[u.id].via!=='convoy' && opposite.via!=='convoy'){
     if(enemy.power===u.power)return moveSuccess[u.id]=false;
-    return moveSuccess[u.id]=power>attackStrength[enemy.id] && power>1;
+    return moveSuccess[u.id]=strength>attackStrength[enemy.id] && strength>1;
    }
    inProgress.add(u.id);
-   const vacates=opposing.kind==='move' && succeeds(enemy);
+   const vacates=activeMove(enemy)&&succeeds(enemy);
    inProgress.delete(u.id);
-   if(vacates) return moveSuccess[u.id]=true;
-   // No self-dislodgement, even with foreign support.
-   if(enemy.power===u.power) return moveSuccess[u.id]=false;
-   return moveSuccess[u.id]=power>defenseStrength[enemy.id];
+   if(vacates)return moveSuccess[u.id]=true;
+   if(enemy.power===u.power)return moveSuccess[u.id]=false;
+   return moveSuccess[u.id]=strength>defenseStrength[enemy.id];
   }
-  for(const u of moveUnits)succeeds(u);
-  // Dislodged defenders whose moves fail. Invaders cannot dislodge compatriots.
-  const nowDislodged=new Set(); const dislodgers={};
-  for(const u of moveUnits){
+  for(const u of moves)succeeds(u);
+  const nextDislodged=new Set(), dislodgers={};
+  for(const u of moves){
    if(!moveSuccess[u.id])continue;
-   const dest=toProvince(orders[u.id].to), original=occupies[dest];
-   if(original && !moveSuccess[original.id] && u.power!==original.power){
-    nowDislodged.add(original.id);dislodgers[original.id]=u.at;
-   }
+   const dest=toProvince(orders[u.id].to),original=occupies[dest];
+   if(original&&!moveSuccess[original.id]&&u.power!==original.power){nextDislodged.add(original.id);dislodgers[original.id]=u.at;}
   }
-  outcome={moveSuccess,attackStrength,defenseStrength,activeSupports,standoffs,dislodgers,dislodged:nowDislodged,orders};
-  if(sameSet(nowDislodged,dislodged))break;
-  dislodged=nowDislodged;
+  return {moveSuccess,standoffs,dislodgers,dislodged:nextDislodged,activeSupports,attackStrength,convoyActive,orders};
  }
+ let outcome=null,forcedFailure=new Set(),paradoxNotes=[];
+ // Iterating from only an optimistic position is insufficient: some convoy
+ // paradoxes have TWO self-consistent outcomes. Compare the result with the
+ // pessimistic assumption that all convoying fleets were initially dislodged.
+ const convoyFleetIds=units.filter(u=>orders[u.id].kind==='convoy').map(u=>u.id);
+ function solveFrom(initialDislodged){
+  let dislodged=new Set(initialDislodged);
+  const visited=new Map(),states=[];
+  for(let i=0;i<100;i++){
+   const key=[...dislodged].sort().join(',');
+   if(visited.has(key))return {cycle:states.slice(visited.get(key))};
+   visited.set(key,states.length);
+   const result=computeRound(dislodged,forcedFailure);
+   states.push({active:new Set(result.convoyActive),dislodged:new Set(dislodged)});
+   if(sameSet(result.dislodged,dislodged))return {outcome:result};
+   dislodged=result.dislodged;
+  }
+  throw Error('Adjudication iteration limit exceeded; no orders were applied.');
+ }
+ for(let attempt=0;attempt<=convoyArmies.length;attempt++){
+  const hopeful=solveFrom(new Set());
+  const cautious=convoyArmies.length?solveFrom(new Set(convoyFleetIds)):hopeful;
+  const stableA=hopeful.outcome,stableB=cautious.outcome;
+  const ambiguous=!stableA||!stableB||!sameSet(stableA.dislodged,stableB.dislodged)
+   || !sameSet(stableA.convoyActive,stableB.convoyActive);
+  if(!ambiguous){outcome=stableA;break;}
+  let unstable=convoyArmies.filter(a=>stableA&&stableB?
+   stableA.convoyActive.has(a.id)!==stableB.convoyActive.has(a.id):
+   [...(hopeful.cycle||[]),...(cautious.cycle||[])].some(x=>x.active.has(a.id)));
+  if(!unstable.length)unstable=convoyArmies;
+  const newlyDisabled=unstable.filter(u=>!forcedFailure.has(u.id));
+  if(!newlyDisabled.length)throw Error('Adjudication produced contradictory outcomes; no orders were applied.');
+  for(const u of newlyDisabled){
+   forcedFailure.add(u.id);
+   paradoxNotes.push(`${display(u.at)} → ${display(orders[u.id].to)}: convoy paradox; move fails`);
+  }
+ }
+ if(!outcome)throw Error('Unable to resolve convoy dependency; no orders were applied.');
  const {moveSuccess,standoffs,dislodgers}=outcome;
  const positions=game.units.map(u=>({...u}));
- for(const u of positions){
-  if(moveSuccess[u.id]){
-   const to=orders[u.id].to;
-   u.at=toProvince(to);u.coast=u.type==='f'?(to.split('/')[1]||null):null;
-  }
+ for(const u of positions)if(moveSuccess[u.id]){
+  const to=orders[u.id].to;
+  u.at=toProvince(to);u.coast=u.type==='f'?(to.split('/')[1]||null):null;
  }
  const retreating=positions.filter(u=>outcome.dislodged.has(u.id));
  const onBoard=positions.filter(u=>!outcome.dislodged.has(u.id));
  const occupied=new Set(onBoard.map(u=>u.at));
  const retreats=retreating.map(u=>{
   const banned=dislodgers[u.id];
-  const choices=destinations(u).filter(t=>!occupied.has(toProvince(t)) && toProvince(t)!==banned && !standoffs.has(toProvince(t)));
+  const choices=destinations(u).filter(t=>!occupied.has(toProvince(t))&&toProvince(t)!==banned&&!standoffs.has(toProvince(t)));
   return {...u,from:byId[u.id].at,attackedFrom:banned,choices};
  });
  const descriptions=[];
  for(const u of game.units){
   const o=orders[u.id];
-  if(o.kind==='move'){
-   descriptions.push(`${u.power.toUpperCase()} ${u.type.toUpperCase()} ${display(u.at)} → ${display(o.to)}: ${moveSuccess[u.id]?'SUCCESS':'BOUNCE / FAILED'}`);
-  }else if(o.kind==='support-hold' || o.kind==='support-move'){
-   const live=outcome.activeSupports.some(s=>s.id===u.id);
-   descriptions.push(`${u.power.toUpperCase()} ${u.type.toUpperCase()} ${display(u.at)}: ${live?'SUPPORT VALID':'SUPPORT CUT / VOID'}`);
-  }
+  if(o.kind==='move')descriptions.push(`${u.power.toUpperCase()} ${u.type.toUpperCase()} ${display(u.at)} → ${display(o.to)}${o.via==='convoy'?' BY CONVOY':''}: ${moveSuccess[u.id]?'SUCCESS':o.via==='convoy'&&!outcome.convoyActive.has(u.id)?'CONVOY INTERRUPTED / NO ROUTE':'BOUNCE / FAILED'}`);
+  else if(o.kind==='convoy')descriptions.push(`${u.power.toUpperCase()} F ${display(u.at)}: CONVOY ${display(byId[o.target]?.at)} → ${display(o.to)}${outcome.dislodged.has(u.id)?' — FLEET DISLODGED':''}`);
+  else if(o.kind.startsWith('support'))descriptions.push(`${u.power.toUpperCase()} ${u.type.toUpperCase()} ${display(u.at)}: ${outcome.activeSupports.some(s=>s.id===u.id)?'SUPPORT VALID':'SUPPORT CUT / VOID'}`);
  }
- return {positions:onBoard,retreats,standoffs:[...standoffs],logs:[...invalid,...descriptions],strengths:outcome.attackStrength};
+ return {positions:onBoard,retreats,standoffs:[...standoffs],logs:[...invalid,...paradoxNotes,...descriptions],strengths:outcome.attackStrength};
 }
 function applyMovement(game){
  if(game.phase!=='orders')return false;
@@ -548,7 +609,8 @@ function byID(id){return game.units.find(u=>u.id===id)}
 function abbrev(id){return id.toUpperCase()}
 function orderText(order){
  if(!order || order.kind==='hold') return 'HOLD';
- if(order.kind==='move')return `→ ${display(order.to)}`;
+ if(order.kind==='move')return `→ ${display(order.to)}${order.via==='convoy'?' (CONVOY)':''}`;
+ if(order.kind==='convoy')return `CONVOY ${display(byID(order.target)?.at)} → ${display(order.to)}`;
  const target=byID(order.target);
  if(order.kind==='support-hold')return `SUPPORT ${target?display(target.at):'?'} HOLD`;
  if(order.kind==='support-move')return `SUPPORT ${target?display(target.at):'?'} → ${display(order.to)}`;
@@ -602,18 +664,19 @@ function renderEditor(){
  const u=byID(selectedId);
  if(!u){root.innerHTML='<p class="editor-help">Select a country with at least one unit.</p>';return;}
  const allowed=availableOrders(game,u), order=game.orders[u.id]||{kind:'hold'};
- const kinds=[['hold','Hold'],['move','Move'],['support-hold','Support hold'],['support-move','Support move']];
- root.innerHTML=`<div class="editor-title">${u.type==='a'?'Army':'Fleet'} in ${escapeHTML(display(u.at+(u.coast?'/'+u.coast:'')))}</div><div class="order-modes">${kinds.map(([kind,label])=>`<button class="mode-btn ${order.kind===kind?'active':''}" data-kind="${kind}" ${!allowed.some(o=>o.kind===kind)?'disabled':''}>${label}</button>`).join('')}</div><div id="orderDetails"></div>`;
+ const orderMode=o=>o.kind==='move'&&o.via==='convoy'?'convoy-move':o.kind;
+ const kinds=[['hold','Hold'],['move','Move'],['convoy-move','Move by convoy'],['convoy','Convoy army'],['support-hold','Support hold'],['support-move','Support move']];
+ root.innerHTML=`<div class="editor-title">${u.type==='a'?'Army':'Fleet'} in ${escapeHTML(display(u.at+(u.coast?'/'+u.coast:'')))}</div><div class="order-modes">${kinds.map(([kind,label])=>`<button class="mode-btn ${orderMode(order)===kind?'active':''}" data-kind="${kind}" ${!allowed.some(o=>orderMode(o)===kind)?'disabled':''}>${label}</button>`).join('')}</div><div id="orderDetails"></div>`;
  root.querySelectorAll('[data-kind]').forEach(b=>b.onclick=()=>{
-  const o=allowed.find(o=>o.kind===b.dataset.kind);
+  const o=allowed.find(o=>orderMode(o)===b.dataset.kind);
   if(o){game.orders[u.id]={...o};render()}
  });
- const choices=allowed.filter(o=>o.kind===order.kind);
+ const choices=allowed.filter(o=>orderMode(o)===orderMode(order));
  if(order.kind==='hold'){$('#orderDetails').innerHTML='<p class="editor-help">This unit will defend its province, but will not advance.</p>';return;}
- const label=order.kind==='move'?'MOVE TO':order.kind==='support-hold'?'SUPPORT UNIT HOLDING':'SUPPORT THE FOLLOWING MOVE';
+ const label=orderMode(order)==='convoy-move'?'CONVOY ARMY TO':order.kind==='move'?'MOVE TO':order.kind==='convoy'?'FLEET TO CONVOY':order.kind==='support-hold'?'SUPPORT UNIT HOLDING':'SUPPORT THE FOLLOWING MOVE';
  const itemLabel=o=>o.kind==='move'?display(o.to):o.kind==='support-hold'?display(byID(o.target)?.at):`${display(byID(o.target)?.at)} → ${display(o.to)}`;
- const idx=Math.max(0,choices.findIndex(o=>o.to===order.to&&o.target===order.target));
- $('#orderDetails').innerHTML=`<label class="field-label" for="orderChoice">${label}</label><select id="orderChoice" class="order-select">${choices.map((o,i)=>`<option value="${i}" ${idx===i?'selected':''}>${escapeHTML(itemLabel(o))}</option>`).join('')}</select><p class="editor-help">${order.kind==='move'?'You can also click a highlighted adjacent province on the map.':'A supporting unit gives strength if its support is valid and not cut by an enemy attack.'}</p>`;
+ const idx=Math.max(0,choices.findIndex(o=>o.to===order.to&&o.target===order.target&&o.via===order.via));
+ $('#orderDetails').innerHTML=`<label class="field-label" for="orderChoice">${label}</label><select id="orderChoice" class="order-select">${choices.map((o,i)=>`<option value="${i}" ${idx===i?'selected':''}>${escapeHTML(itemLabel(o))}</option>`).join('')}</select><p class="editor-help">${orderMode(order)==='convoy-move'?'Requires matching orders from every sea fleet along at least one complete route.':order.kind==='convoy'?'The army must also order the matching convoy move. Other powers may provide convoying fleets.':order.kind==='move'?'You can also click an adjacent province on the map.':'A supporting unit gives strength if its support is valid and not cut by an enemy attack.'}</p>`;
  $('#orderChoice').onchange=()=>{game.orders[u.id]={...choices[Number($('#orderChoice').value)]};render()};
 }
 function renderAdvance(){
@@ -622,7 +685,7 @@ function renderAdvance(){
   const total=game.units.length,issued=Object.keys(game.orders).length;
   $('#ordersCount').textContent=`${issued} of ${total} units issued orders`;
   button.innerHTML=`Resolve ${game.season} ${game.year} <span>→</span>`;
-  hint.textContent='All powers resolve simultaneously. Units without orders hold.';
+  hint.textContent='All powers resolve simultaneously. Convoying fleets must receive matching convoy orders; units without orders hold.';
   button.disabled=false;
  }else if(game.phase==='retreats'){
   $('#ordersCount').textContent=`${game.retreats.length} dislodged unit${game.retreats.length===1?'':'s'}`;
@@ -676,7 +739,7 @@ function drawMap(){
  const unitAt=Object.fromEntries(game.units.map(u=>[u.at,u]));
  const retreatAt=Object.fromEntries((game.retreats||[]).map(u=>[u.from,u]));
  const selected=byID(selectedId);
- const legal=game.phase==='orders' && selected && selected.power===activePower?new Set(destinations(selected).map(toProvince)):new Set();
+ const legal=game.phase==='orders' && selected && selected.power===activePower?new Set(allMoveChoices(game,selected).map(o=>toProvince(o.to))):new Set();
  let svg='<defs><marker id="arrow-head" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#aa682e"/></marker></defs><rect x="0" y="0" width="1390" height="895" fill="#d8e6e6"/>';
  for(const cell of atlasCache){
   const p=PROVINCES[cell.id],pwr=power(p.home);
@@ -734,6 +797,9 @@ function mapClick(at){
  const selected=byID(selectedId);
  if(selected?.power!==activePower)return;
  const choices=destinations(selected).filter(x=>toProvince(x)===at);
+ if(!choices.length && selected.type==='a' && possibleConvoyDestinations(game,selected).includes(at)){
+  game.orders[selected.id]={kind:'move',to:at,via:'convoy'};render();return;
+ }
  if(choices.length){
   if(choices.length>1)chooseCoast(selected,choices);else issueMoveTo(selected,choices[0]);return;
  }
