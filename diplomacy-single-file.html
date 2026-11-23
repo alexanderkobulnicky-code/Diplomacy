@@ -1,0 +1,688 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width,initial-scale=1" />
+ <meta name="theme-color" content="#213c37" />
+ <title>Diplomacy · 1901</title>
+ 
+ <style>
+:root{--forest:#223e37;--forest-dark:#192d28;--paper:#f5f1e8;--card:#fffdf8;--gold:#bb9053;--ink:#25302c;--muted:#6b766e;--line:#ddd9ce;--shadow:0 8px 35px rgba(35,48,43,.08)}
+*{box-sizing:border-box}html{background:var(--paper)}body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}button,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.48}button:focus-visible,select:focus-visible{outline:3px solid #c18d40;outline-offset:2px}.topbar{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:18px;background:var(--forest);color:#f6f1e6;padding:13px clamp(16px,4vw,60px);border-bottom:3px solid #bd955d}.brand{display:flex;align-items:center;gap:13px}.brand-mark{font-size:36px;color:#dabb7d;line-height:1}.brand-title{font-family:Georgia,serif;font-size:23px;letter-spacing:.17em}.brand-tagline{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#c5d3cb;margin-top:3px}.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.small-button{display:inline-flex;align-items:center;justify-content:center;background:#33534a;color:#f9f4e8;border:1px solid #668478;padding:9px 12px;border-radius:5px;font-size:12px;min-height:36px}.small-button:hover{background:#416459}.small-button.ghost{background:transparent;border-color:#81958a}.file-button{cursor:pointer}main{max-width:1810px;margin:0 auto;padding:28px clamp(15px,2.3vw,38px) 20px}.page-heading{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-bottom:27px}.eyebrow,.section-kicker{font-size:10px;color:#9b7547;letter-spacing:.17em;font-weight:750;text-transform:uppercase}h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:normal}h1{font-size:clamp(29px,3.2vw,46px);margin:9px 0 7px;line-height:1.05}h2{font-size:21px;margin:7px 0 0}.intro{color:var(--muted);margin:8px 0 0;max-width:800px;line-height:1.55}.date-panel{text-align:right;white-space:nowrap}.phase-pill{font-size:10px;letter-spacing:.1em;background:#e4d8b9;color:#625126;border-radius:25px;padding:6px 12px;font-weight:750}.date-label{font-family:Georgia,serif;font-size:21px;letter-spacing:.05em;margin-top:12px}.date-label span{color:#a47e4a}.game-layout{display:grid;grid-template-columns:minmax(0,1fr) 332px;gap:18px;align-items:start}.map-area,.sidebar{min-width:0}.panel-heading,.bulletin-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}.map-controls{display:flex;align-items:center;gap:8px;color:#7c786f;font-size:11px}.map-controls button{width:30px;height:30px;border:1px solid var(--line);background:white;border-radius:5px;color:var(--forest);font-size:20px;line-height:1}.map-viewport{border:1px solid #c9d0c6;border-radius:7px;background:#dce9e7;overflow:auto;box-shadow:var(--shadow);position:relative;max-height:min(76vh,820px);scrollbar-color:#b6c4bc transparent;touch-action:pan-x pan-y}.map-viewport svg{display:block;width:1320px;max-width:none;height:auto;user-select:none}.province{stroke:#b5b9ad;stroke-width:1.6;cursor:pointer;transition:fill .14s}.province:hover{stroke:#786544;stroke-width:3;filter:brightness(1.06)}.province.selected-cell{stroke:#a36d24;stroke-width:4}.province.legal-cell{stroke:#357a70;stroke-width:3;stroke-dasharray:5 4}.map-label{font-size:12px;font-weight:680;letter-spacing:1px;fill:#52645c;pointer-events:none;text-anchor:middle;dominant-baseline:central}.sea-label{font-size:12px;fill:#6a9298;font-weight:650;letter-spacing:1.2px}.center-dot{fill:#f9f3df;stroke:#7a7463;stroke-width:2;pointer-events:none}.unit-token{stroke:#fdf5df;stroke-width:3.6;cursor:pointer;filter:drop-shadow(0px 3px 2px #0003)}.unit-letter{font-size:20px;font-family:Georgia,serif;pointer-events:none;text-anchor:middle;dominant-baseline:central;font-weight:bold}.unit-selected{stroke:#f6c96d;stroke-width:7;filter:drop-shadow(0 0 7px #d18c34aa)}.unit-order-arrow{stroke:#aa682e;stroke-width:4;fill:none;marker-end:url(#arrow-head);pointer-events:none;stroke-dasharray:6 3}.map-footer{display:flex;align-items:center;gap:15px;flex-wrap:wrap;color:#737b70;font-size:11px;margin:11px 0 23px;line-height:1.45}.legend-circle{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px;border:2px solid #686f62}.unit-legend{background:#d17c73}.center-legend{background:#fff6d7}.legend-square{display:inline-block;width:10px;height:10px;background:#d4e7e8;margin-right:5px;border:1px solid #afcbcc}.map-note{flex:1;min-width:200px;text-align:right}.sidebar{background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);overflow:hidden}.side-section{padding:18px;border-bottom:1px solid var(--line)}.power-selector{padding-bottom:14px}.power-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:13px}.power-button{border:1px solid #e0ded6;border-radius:6px;background:#faf9f5;padding:10px 8px;min-height:52px;display:flex;align-items:center;gap:9px;color:var(--ink);text-align:left}.power-button:hover{border-color:#a3aa9d}.power-button.active{background:#eef1e9;border-color:var(--forest);box-shadow:inset 0 0 0 1px var(--forest)}.power-button .dot{flex-shrink:0;width:11px;height:11px;border-radius:50%;border:1px solid #0001}.power-button .power-name{font-weight:700;font-size:12px;line-height:1.2}.power-button .power-count{font-size:10px;color:#7c8077;margin-top:3px}.section-intro{font-size:12px;line-height:1.55;color:#788079;margin-top:10px}.unit-list{margin-top:12px;display:flex;flex-direction:column;gap:7px}.unit-row{display:flex;align-items:center;text-align:left;border:1px solid #e3e0d9;border-radius:6px;background:#faf9f5;padding:11px;gap:9px;width:100%}.unit-row.active{border-color:#997645;background:#fcf3e3}.unit-row:hover{border-color:#b29b77}.unit-icon{font-family:Georgia,serif;font-size:18px;font-weight:bold;display:grid;place-items:center;width:31px;height:31px;flex-shrink:0;border:1px solid #ded4c3;border-radius:50%;background:#f1ecdf}.unit-row .unit-info{flex:1;min-width:0}.unit-place{font-size:12px;font-weight:700}.unit-command{font-size:11px;color:#8d7755;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.unit-chevron{font-size:17px;color:#978b76}.editor-panel{background:#f6f5ee}.editor-title{font-family:Georgia,serif;font-size:21px;margin:12px 0}.order-modes{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:12px 0}.mode-btn{padding:10px 7px;font-size:11px;background:#fff;border:1px solid #d5d7ca;border-radius:5px}.mode-btn.active{background:var(--forest);color:white;border-color:var(--forest)}.field-label{display:block;color:#5c675f;font-size:11px;font-weight:700;margin:11px 0 6px}.order-select{display:block;width:100%;padding:10px 9px;background:white;color:var(--ink);border:1px solid #d5d6ca;border-radius:5px;font-size:12px}.editor-help{color:#788179;font-size:11px;line-height:1.5;margin:12px 0 0}.advance-section{padding:17px 18px 20px;background:#fffdf7}.progress-label{font-size:11px;color:#8b8578;margin-bottom:9px}.advance-button{width:100%;background:var(--forest);color:white;border:0;border-radius:5px;display:flex;align-items:center;justify-content:space-between;padding:15px 17px;font-size:13px;font-weight:700;letter-spacing:.02em}.advance-button:hover{background:#355b4f}.advance-button span{font-size:20px;font-weight:normal}.advance-footnote{font-size:11px;color:#89897f;line-height:1.55;margin-top:10px}.fine-print{background:#f7f3e8;border-bottom:0}.fine-print p{font-size:11px;line-height:1.55;color:#798077;margin:9px 0 0}.fine-print strong{color:#705e43}.bulletin{background:#fffdf8;border:1px solid #e1ded6;border-radius:7px;padding:18px;box-shadow:var(--shadow)}.bulletin-header{margin-bottom:10px}.text-button{background:none;border:none;color:#977e5e;text-decoration:underline;font-size:11px}.empty-report{color:#8e938b;font-style:italic;font-family:Georgia,serif}.report-list{max-height:400px;overflow:auto;display:grid;gap:7px}.report-entry{font-size:11px;border-left:3px solid #c6b394;background:#f7f5ee;padding:8px 10px;line-height:1.4}.report-entry.success{border-color:#73a18c}.report-entry.fail{border-color:#bd7263}.report-heading{font-family:Georgia,serif;font-size:15px;margin:10px 0}.choice-row{display:flex;gap:8px;align-items:center;margin:8px 0}.choice-row select{min-width:0;flex:1}.choice-row button{border:1px solid #c8b79e;background:#faf7ef;border-radius:4px;padding:8px}.stat-note{font-size:11px;color:#837f70;margin:10px 0}footer{font-size:11px;line-height:1.5;color:#92958b;margin:25px 0 10px;text-align:center}dialog{border:1px solid #c4b699;border-radius:9px;padding:0;max-width:540px;width:calc(100% - 30px);box-shadow:0 30px 100px #0005;background:#fffdf8}dialog::backdrop{background:#1e3129a9}.dialog-inner{padding:23px 28px 28px}.dialog-top{display:flex;justify-content:space-between;align-items:flex-start}.dialog-top h2{margin-bottom:16px}.dialog-inner p{line-height:1.6;color:#59655d;font-size:13px}.dialog-close{border:0;background:none;font-size:24px;color:#68716a}.rule-note{background:#f3f0e6;padding:12px;color:#776d59;font-size:11px;line-height:1.5;margin:15px 0}.dialog-inner .advance-button{margin-top:14px}
+@media(max-width:980px){.game-layout{grid-template-columns:minmax(0,1fr)}.sidebar{display:grid;grid-template-columns:1fr 1fr}.power-selector{grid-column:1/-1}.power-list{grid-template-columns:repeat(7,minmax(0,1fr))}.power-button{padding:8px 6px;flex-direction:column;text-align:center;min-height:67px}.power-button .power-name{font-size:10px}.side-section{border-right:1px solid var(--line)}.advance-section{display:flex;flex-direction:column;justify-content:center}.fine-print{grid-column:1/-1}.map-viewport{max-height:600px}}
+@media(max-width:620px){.topbar{align-items:flex-start;flex-direction:column;gap:11px;padding:14px 16px}.header-actions{gap:6px}.small-button{padding:7px 8px;font-size:11px;min-height:32px}.brand-title{font-size:20px}.brand-tagline{font-size:9px}.page-heading{align-items:flex-start;gap:10px;margin-bottom:18px}.date-label{font-size:15px}.phase-pill{font-size:9px;padding:5px 8px}h1{font-size:28px}.intro{font-size:12px}.sidebar{display:block}.power-list{grid-template-columns:repeat(4,1fr)}.power-button{flex-direction:row;text-align:left;min-height:52px}.map-footer{gap:7px 12px}.map-note{text-align:left;min-width:100%;}.map-viewport{max-height:500px}.bulletin{padding:14px}}
+
+</style>
+</head>
+<body>
+ <header class="topbar">
+  <div class="brand"><div class="brand-mark">✣</div><div><div class="brand-title">DIPLOMACY</div><div class="brand-tagline">An experiment in the balance of power</div></div></div>
+  <div class="header-actions">
+   <button class="small-button" id="helpBtn">How to play</button>
+   <button class="small-button" id="exportBtn">Export save</button>
+   <label class="small-button file-button" for="importFile">Import save<input id="importFile" type="file" accept=".json,application/json" hidden /></label>
+   <button class="small-button ghost" id="resetBtn">New game</button>
+  </div>
+ </header>
+ <main>
+  <div class="page-heading">
+   <div><div class="eyebrow">THE EUROPEAN THEATRE · 1901</div><h1 id="mainTitle">The Great Powers</h1><p class="intro">A seven-power, hot-seat Diplomacy prototype. You command every country for now; the diplomats arrive later.</p></div>
+   <div class="date-panel"><span id="phasePill" class="phase-pill">MOVEMENT</span><div id="dateLabel" class="date-label">SPRING <span>1901</span></div></div>
+  </div>
+  <div class="game-layout">
+   <section class="map-area">
+    <div class="panel-heading"><div><span class="section-kicker">THE BOARD</span><h2>The European map</h2></div><div class="map-controls"><button id="zoomOut" title="Zoom out">−</button><span id="zoomPct">100%</span><button id="zoomIn" title="Zoom in">+</button></div></div>
+    <div class="map-viewport" id="mapViewport" aria-label="Interactive schematic Diplomacy map"><svg id="gameMap" role="img" aria-label="Map of Diplomacy provinces and units" viewBox="0 0 1390 895"></svg></div>
+    <div class="map-footer"><span><i class="legend-circle unit-legend"></i> Army or fleet token</span><span><i class="legend-circle center-legend"></i> Supply center</span><span><i class="legend-square"></i> Sea area</span><span class="map-note">Schematic, not geographically exact · Tap your own unit, then an adjacent province to move.</span></div>
+    <section class="bulletin"><div class="bulletin-header"><div><span class="section-kicker">DISPATCHES</span><h2>After-action report</h2></div><button id="clearReport" class="text-button">Clear</button></div><div id="reportBody"><p class="empty-report">No orders have been resolved. Europe is holding its breath.</p></div></section>
+   </section>
+   <aside class="sidebar">
+    <section class="side-section power-selector"><div class="section-kicker">CHOOSE A POWER</div><div id="powerList" class="power-list"></div></section>
+    <section class="side-section"><div class="section-kicker">ORDERS FOR <span id="powerTitle">AUSTRIA-HUNGARY</span></div><div class="section-intro">Select a unit to write its orders. Unassigned units will hold.</div><div id="unitList" class="unit-list"></div></section>
+    <section class="side-section editor-panel" id="editorPanel"><div class="section-kicker">ORDER DESK</div><div id="editor"></div></section>
+    <section class="advance-section"><div class="progress-label" id="ordersCount">0 of 22 units ordered</div><button id="advanceBtn" class="advance-button">Resolve Spring 1901 <span>→</span></button><div class="advance-footnote" id="advanceHint">Unassigned units hold. This button resolves all seven powers simultaneously.</div></section>
+    <section class="side-section fine-print"><div class="section-kicker">THIS BUILD</div><p>Orders: hold, move, support hold, support move. Automatic support cuts, bounces, and dislodgement; retreats, fall turns, and winter builds/disbands are supported.</p><p><strong>Not yet implemented:</strong> convoy orders. The map is a schematic prototype and some intricate rules still need additional testing. Suitable for experimentation, not tournament adjudication.</p></section>
+   </aside>
+  </div>
+  <footer>Diplomacy is a classic board game designed by Allan B. Calhamer. This independent, unofficial prototype is not affiliated with its publisher. No AI service or account is required.</footer>
+ </main>
+ <dialog id="helpDialog"><div class="dialog-inner"><div class="dialog-top"><div><div class="section-kicker">FIELD GUIDE</div><h2>How to play this prototype</h2></div><button class="dialog-close" id="closeHelp" aria-label="Close">×</button></div>
+  <p><strong>1. Choose a power.</strong> The seven power tabs show their supply-center and unit counts. At the start, the official 1901 units are deployed.</p>
+  <p><strong>2. Give orders.</strong> Select a unit and choose Hold, Move, Support hold, or Support move. Alternatively, click a unit on the map and then a highlighted adjacent province to order a move. Repeat for the other powers. You can leave units unassigned: they hold.</p>
+  <p><strong>3. Resolve.</strong> Press the large button to process every country's orders simultaneously. The after-action report shows outcomes. If any units are dislodged, enter retreats; otherwise the game advances to the next phase.</p>
+  <p><strong>4. Continue.</strong> Fall supply-center capture and winter builds/disbands are implemented. Convoy orders are not yet available, so this is an early prototype rather than a complete game.</p>
+  <p><strong>5. Keep your game.</strong> Autosave stores the position on this device. Export a JSON backup to preserve it or import one later.</p>
+  <div class="rule-note">Province labels are abbreviated on the map. Hover or tap to select a province and read its full name in the order editor.</div>
+  <button id="startBtn" class="advance-button">Enter the map <span>→</span></button></div></dialog>
+ <script>
+// A hand-drawn schematic atlas for standard Diplomacy (1901), not a facsimile of the published map.
+// Province graph and starting positions are separate from the rendered geography.
+const POWERS = [
+  {id:'eng', name:'England', short:'ENG', color:'#d4a44a', ink:'#3f3013'},
+  {id:'fra', name:'France', short:'FRA', color:'#5c9cc2', ink:'#102d3b'},
+  {id:'ger', name:'Germany', short:'GER', color:'#88949e', ink:'#17252c'},
+  {id:'ita', name:'Italy', short:'ITA', color:'#75aa7c', ink:'#16371f'},
+  {id:'aus', name:'Austria-Hungary', short:'AUS', color:'#d17c73', ink:'#47231f'},
+  {id:'rus', name:'Russia', short:'RUS', color:'#9f91c5', ink:'#322547'},
+  {id:'tur', name:'Turkey', short:'TUR', color:'#d1a36c', ink:'#50341c'},
+];
+// x and y are deliberately schematic positions on a roomy canvas.
+// [name, x, y, kind, homePower?]  kind: 's' supply center, 'l' land, 'w' water
+const RAW = {
+ nao:['North Atlantic',80,210,'w'], nwg:['Norwegian Sea',335,95,'w'], bar:['Barents Sea',820,55,'w'],
+ nth:['North Sea',380,260,'w'], ska:['Skagerrak',530,208,'w'], hel:['Heligoland Bight',493,332,'w'],
+ bal:['Baltic Sea',674,277,'w'], bot:['Gulf of Bothnia',793,180,'w'],
+ iri:['Irish Sea',118,375,'w'], eng:['English Channel',294,441,'w'], mao:['Mid-Atlantic Ocean',84,527,'w'],
+ wes:['Western Mediterranean',448,760,'w'], lyo:['Gulf of Lyon',578,689,'w'], tys:['Tyrrhenian Sea',692,771,'w'],
+ ion:['Ionian Sea',858,825,'w'], adr:['Adriatic Sea',827,672,'w'], aeg:['Aegean Sea',1002,795,'w'],
+ eas:['Eastern Mediterranean',1165,840,'w'], bla:['Black Sea',1151,536,'w'],
+ cly:['Clyde',245,161,'l','eng'], edi:['Edinburgh',289,204,'s','eng'], lvp:['Liverpool',233,283,'s','eng'],
+ yor:['Yorkshire',292,283,'l','eng'], wal:['Wales',228,358,'l','eng'], lon:['London',320,356,'s','eng'],
+ nor:['Norway',528,94,'s'], swe:['Sweden',657,121,'s'], fin:['Finland',812,129,'l','rus'],
+ stp:['St Petersburg',1018,129,'s','rus'], lvn:['Livonia',844,287,'l','rus'], mos:['Moscow',1041,325,'s','rus'],
+ bre:['Brest',305,489,'s','fra'], pic:['Picardy',406,438,'l','fra'], par:['Paris',410,516,'s','fra'],
+ bur:['Burgundy',524,529,'l','fra'], gas:['Gascony',355,603,'l','fra'], mar:['Marseilles',481,643,'s','fra'],
+ bel:['Belgium',460,398,'s'], hol:['Holland',509,374,'s'], den:['Denmark',583,275,'s'],
+ kie:['Kiel',565,404,'s','ger'], ber:['Berlin',698,391,'s','ger'], mun:['Munich',640,495,'s','ger'],
+ ruh:['Ruhr',551,451,'l','ger'], pru:['Prussia',778,347,'l','ger'], sil:['Silesia',763,433,'l','ger'],
+ por:['Portugal',184,697,'s'], spa:['Spain',305,675,'s'], naf:['North Africa',265,822,'l'],
+ tun:['Tunis',646,829,'s'],
+ pie:['Piedmont',609,621,'l','ita'], ven:['Venice',738,580,'s','ita'], tus:['Tuscany',722,669,'l','ita'],
+ rom:['Rome',758,707,'s','ita'], apu:['Apulia',818,696,'l','ita'], nap:['Naples',786,780,'s','ita'],
+ tyr:['Tyrolia',702,523,'l','aus'], boh:['Bohemia',788,477,'l','aus'], vie:['Vienna',833,529,'s','aus'],
+ tri:['Trieste',814,615,'s','aus'], bud:['Budapest',927,554,'s','aus'], gal:['Galicia',932,469,'l','aus'],
+ war:['Warsaw',880,382,'s','rus'], ukr:['Ukraine',1046,460,'l','rus'], sev:['Sevastopol',1090,622,'s','rus'],
+ alb:['Albania',896,701,'l'], ser:['Serbia',951,645,'s'], rum:['Rumania',1044,649,'s'],
+ bul:['Bulgaria',1054,713,'s'], gre:['Greece',933,777,'s'],
+ con:['Constantinople',1145,712,'s','tur'], ank:['Ankara',1200,636,'s','tur'],
+ smy:['Smyrna',1179,787,'s','tur'], arm:['Armenia',1290,665,'l','tur'], syr:['Syria',1282,807,'l','tur'],
+};
+const PROVINCES = Object.fromEntries(Object.entries(RAW).map(([id,v])=> [id,{id,name:v[0],x:v[1],y:v[2],kind:v[3],home:v[4]||null}]));
+const CENTERS = Object.keys(PROVINCES).filter(k=>PROVINCES[k].kind==='s');
+const SEAS = Object.keys(PROVINCES).filter(k=>PROVINCES[k].kind==='w');
+
+// Complete undirected ARMY graph of land borders; links from a water province are illegal.
+const ARMY_PAIRS = `
+ alb-tri alb-ser alb-gre
+ ank-con ank-smy ank-arm
+ apu-ven apu-rom apu-nap
+ arm-smy arm-syr arm-sev
+ bel-pic bel-bur bel-ruh bel-hol
+ ber-kie ber-mun ber-sil ber-pru
+ boh-mun boh-tyr boh-vie boh-gal boh-sil
+ bre-par bre-pic bre-gas
+ bud-vie bud-tri bud-ser bud-rum bud-gal
+ bul-rum bul-ser bul-gre bul-con
+ bur-par bur-pic bur-ruh bur-mun bur-mar bur-gas
+ cly-edi cly-lvp
+ con-smy
+ den-kie den-swe
+ edi-lvp edi-yor
+ fin-nor fin-swe fin-stp
+ gal-vie gal-rum gal-ukr gal-war gal-sil
+ gas-par gas-mar gas-spa
+ gre-ser
+ hol-ruh hol-kie
+ kie-ruh kie-mun
+ lon-wal lon-yor
+ lvn-pru lvn-war lvn-mos lvn-stp
+ lvp-yor lvp-wal
+ mar-spa mar-pie
+ mos-stp mos-war mos-ukr mos-sev
+ mun-ruh mun-sil mun-tyr
+ naf-tun
+ nap-rom
+ nor-swe nor-stp
+ par-pic par-bur
+ pic-bel
+ pie-ven pie-tyr pie-tus
+ por-spa
+ pru-sil pru-war
+ rom-tus
+ ruh-bel
+ rum-ser rum-ukr rum-sev
+ ser-tri ser-gre
+ sev-ukr
+ sil-war
+ smy-syr
+ spa-por
+ stp-fin
+ swe-fin
+ tri-tyr tri-vie tri-ven
+ tun-naf
+ tus-ven
+ tyr-vie tyr-ven
+ ukr-war
+ ven-tri
+ vie-bud
+ wal-yor
+ war-gal
+`;
+// Uncoasted keys are sea spaces or single-coast land provinces.
+// A fleet occupying a two-coast province carries the /nc, /sc or /ec qualifier.
+const FLEET_PAIRS = `
+ nao-nwg nao-iri nao-mao nao-cly nao-lvp
+ nwg-bar nwg-nth nwg-nor nwg-cly nwg-edi
+ bar-nor bar-stp/nc
+ nth-ska nth-hel nth-eng nth-edi nth-yor nth-lon nth-bel nth-hol nth-den nth-nor
+ ska-nor ska-swe ska-den
+ hel-hol hel-kie hel-den
+ bal-den bal-swe bal-bot bal-lvn bal-pru bal-ber bal-kie
+ bot-swe bot-fin bot-stp/sc bot-lvn
+ mao-iri mao-eng mao-wes mao-bre mao-gas mao-spa/nc mao-spa/sc mao-por mao-naf
+ iri-eng iri-lvp iri-wal
+ eng-lon eng-wal eng-pic eng-bre eng-bel
+ wes-lyo wes-tys wes-spa/sc wes-naf wes-tun
+ lyo-tys lyo-spa/sc lyo-mar lyo-pie lyo-tus
+ tys-ion tys-tun tys-tus tys-rom tys-nap
+ ion-adr ion-aeg ion-eas ion-tun ion-nap ion-apu ion-alb ion-gre
+ adr-ven adr-tri adr-alb adr-apu
+ aeg-eas aeg-gre aeg-bul/sc aeg-con aeg-smy
+ eas-smy eas-syr
+ bla-rum bla-bul/ec bla-con bla-ank bla-arm bla-sev
+ cly-lvp cly-edi
+ edi-yor
+ lvp-wal
+ wal-lon
+ yor-lon
+ nor-stp/nc nor-swe
+ swe-fin swe-den
+ fin-stp/sc
+ den-kie
+ kie-hol kie-ber
+ hol-bel
+ bel-pic
+ pic-bre
+ bre-gas
+ gas-spa/nc
+ spa/nc-por spa/sc-por spa/sc-mar
+ mar-pie
+ pie-tus
+ tus-rom
+ rom-nap
+ nap-apu
+ apu-ven
+ ven-tri
+ tri-alb
+ alb-gre
+ gre-bul/sc
+ bul/sc-con bul/ec-con bul/ec-rum
+ rum-sev
+ sev-arm
+ arm-ank
+ ank-con
+ con-smy
+ smy-syr
+ lvn-pru lvn-stp/sc
+ pru-ber
+ naf-tun
+`;
+function makeGraph(pairs){
+ const out={};
+ for(const [a,b] of pairs.trim().split(/\s+/).map(t=>t.split('-'))){
+  if(!a||!b)continue;
+  (out[a] ||= new Set()).add(b);
+  (out[b] ||= new Set()).add(a);
+ }
+ return Object.fromEntries(Object.entries(out).map(([k,v])=>[k,[...v].sort()]));
+}
+const ARMY_GRAPH=makeGraph(ARMY_PAIRS), FLEET_GRAPH=makeGraph(FLEET_PAIRS);
+const INITIAL_UNITS = [
+ ['eng','f','lon'], ['eng','f','edi'], ['eng','a','lvp'],
+ ['fra','f','bre'], ['fra','a','par'], ['fra','a','mar'],
+ ['ger','f','kie'], ['ger','a','ber'], ['ger','a','mun'],
+ ['ita','f','nap'], ['ita','a','ven'], ['ita','a','rom'],
+ ['aus','f','tri'], ['aus','a','vie'], ['aus','a','bud'],
+ ['rus','f','stp','sc'], ['rus','f','sev'], ['rus','a','mos'], ['rus','a','war'],
+ ['tur','f','ank'], ['tur','a','con'], ['tur','a','smy'],
+];
+function toProvince(k){return (k||'').split('/')[0]}
+function display(k){
+ const [id,coast]=String(k).split('/');
+ return (PROVINCES[id]?.name||id)+(coast?` (${coast.toUpperCase()})`:'');
+}
+function unitNode(unit){return unit.type==='f' && unit.coast?`${unit.at}/${unit.coast}`:unit.at}
+function fleetNeighbors(unit){return FLEET_GRAPH[unitNode(unit)]||[]}
+function destinations(unit){return unit.type==='a'?(ARMY_GRAPH[unit.at]||[]):fleetNeighbors(unit)}
+function mayReach(unit,to){return destinations(unit).includes(to)}
+function initialGame(){
+ const owned=Object.fromEntries(CENTERS.map(id=>[id,PROVINCES[id].home||null]));
+ return {year:1901,season:'Spring',phase:'orders',units:INITIAL_UNITS.map(([power,type,at,coast])=>({id:`${power}-${type}-${at}`,power,type,at,coast:coast||null})),owned,orders:{},result:null,history:[]};
+}
+
+</script>
+ <script>
+// Rules engine for hold/move/support (including support cuts, bounces,
+// head-to-head battles, cycles, retreats, and winter adjustments).
+// Deliberate prototype limitation: fleets cannot yet issue convoy orders.
+function unique(a){return [...new Set(a)]}
+function legalSupportLocations(unit){return destinations(unit)}
+function availableOrders(game,unit){
+ const occupancy=Object.fromEntries(game.units.map(u=>[u.at,u]));
+ const options=[{kind:'hold'}];
+ for(const to of destinations(unit)) options.push({kind:'move',to});
+ for(const to of legalSupportLocations(unit)){
+  const candidate=occupancy[toProvince(to)];
+  if(candidate && candidate.id!==unit.id) options.push({kind:'support-hold',target:candidate.id});
+ }
+ for(const candidate of game.units){
+  if(candidate.id===unit.id) continue;
+  for(const to of destinations(candidate)){
+   if(legalSupportLocations(unit).some(dest=>dest===to || (toProvince(dest)===toProvince(to) && unit.type==='a'))){
+    options.push({kind:'support-move',target:candidate.id,to});
+   }
+  }
+ }
+ return options;
+}
+function resolveMovement(game){
+ const units=game.units, byId=Object.fromEntries(units.map(u=>[u.id,u]));
+ const occupies=Object.fromEntries(units.map(u=>[u.at,u]));
+ const submitted=game.orders||{}, orders={};
+ const invalid=[];
+ for(const u of units){
+  const o=submitted[u.id]||{kind:'hold'};
+  const allowed=availableOrders(game,u);
+  const valid=allowed.some(allowedOrder=>allowedOrder.kind===o.kind && (allowedOrder.to||null)===(o.to||null) && (allowedOrder.target||null)===(o.target||null));
+  orders[u.id]=valid?{...o}:{kind:'hold'};
+  if(!valid) invalid.push(`${u.power.toUpperCase()} ${u.type.toUpperCase()} ${display(u.at)}: illegal order becomes HOLD`);
+ }
+ // An order to support an army that isn't actually moving there contributes no strength.
+ const supportList=units.filter(u=>orders[u.id].kind.startsWith('support')).filter(u=>{
+  const o=orders[u.id], target=byId[o.target];
+  if(!target)return false;
+  if(o.kind==='support-move')return orders[target.id].kind==='move' && orders[target.id].to===o.to;
+  return orders[target.id].kind!=='move';
+ });
+ const moveUnits=units.filter(u=>orders[u.id].kind==='move');
+ const sameSet=(a,b)=>a.size===b.size&&[...a].every(v=>b.has(v));
+ // Dislodged attackers do not cut support. Repeat until this is self-consistent.
+ let dislodged=new Set(), outcome=null, activeSupports=[];
+ for(let iteration=0;iteration<20;iteration++){
+  activeSupports=supportList.filter(s=>{
+   const o=orders[s.id];
+   if(dislodged.has(s.id))return false;
+   return !moveUnits.some(attacker=>{
+    if(attacker.power===s.power || dislodged.has(attacker.id)) return false;
+    const attack=orders[attacker.id];
+    if(toProvince(attack.to)!==s.at)return false;
+    // Attack from province the support is directed against doesn't cut it.
+    if(o.kind==='support-move' && attacker.at===toProvince(o.to))return false;
+    return true;
+   });
+  });
+  const attackers={};
+  const attackStrength={};
+  const defenseStrength={};
+  for(const u of units){
+   if(orders[u.id].kind==='move'){
+    const to=toProvince(orders[u.id].to);
+    (attackers[to] ||= []).push(u);
+    attackStrength[u.id]=1+activeSupports.filter(s=>orders[s.id].kind==='support-move' && orders[s.id].target===u.id).length;
+   }
+   defenseStrength[u.id]=1+activeSupports.filter(s=>orders[s.id].kind==='support-hold' && orders[s.id].target===u.id).length;
+  }
+  // Only the unique strongest incoming attack can capture a space.
+  const winner={}; const standoffs=new Set();
+  for(const [province,arr] of Object.entries(attackers)){
+   const highest=Math.max(...arr.map(a=>attackStrength[a.id]));
+   const leaders=arr.filter(a=>attackStrength[a.id]===highest);
+   if(leaders.length===1)winner[province]=leaders[0];
+   else standoffs.add(province);
+  }
+  const moveSuccess={}; const inProgress=new Set();
+  function succeeds(u){
+   if(Object.hasOwn(moveSuccess,u.id))return moveSuccess[u.id];
+   if(inProgress.has(u.id))return true; // unopposed rotation of 3+ units is allowed
+   if(orders[u.id].kind!=='move')return false;
+   const to=toProvince(orders[u.id].to), enemy=occupies[to], power=attackStrength[u.id];
+   if(!winner[to] || winner[to].id!==u.id) return moveSuccess[u.id]=false;
+   if(!enemy) return moveSuccess[u.id]=true;
+   const opposing=orders[enemy.id];
+   // Equal-strength head-to-head moves bounce. A 2-cycle cannot rotate.
+   if(opposing.kind==='move' && toProvince(opposing.to)===u.at){
+    if(enemy.power===u.power)return moveSuccess[u.id]=false;
+    return moveSuccess[u.id]=power>attackStrength[enemy.id] && power>1;
+   }
+   inProgress.add(u.id);
+   const vacates=opposing.kind==='move' && succeeds(enemy);
+   inProgress.delete(u.id);
+   if(vacates) return moveSuccess[u.id]=true;
+   // No self-dislodgement, even with foreign support.
+   if(enemy.power===u.power) return moveSuccess[u.id]=false;
+   return moveSuccess[u.id]=power>defenseStrength[enemy.id];
+  }
+  for(const u of moveUnits)succeeds(u);
+  // Dislodged defenders whose moves fail. Invaders cannot dislodge compatriots.
+  const nowDislodged=new Set(); const dislodgers={};
+  for(const u of moveUnits){
+   if(!moveSuccess[u.id])continue;
+   const dest=toProvince(orders[u.id].to), original=occupies[dest];
+   if(original && !moveSuccess[original.id] && u.power!==original.power){
+    nowDislodged.add(original.id);dislodgers[original.id]=u.at;
+   }
+  }
+  outcome={moveSuccess,attackStrength,defenseStrength,activeSupports,standoffs,dislodgers,dislodged:nowDislodged,orders};
+  if(sameSet(nowDislodged,dislodged))break;
+  dislodged=nowDislodged;
+ }
+ const {moveSuccess,standoffs,dislodgers}=outcome;
+ const positions=game.units.map(u=>({...u}));
+ for(const u of positions){
+  if(moveSuccess[u.id]){
+   const to=orders[u.id].to;
+   u.at=toProvince(to);u.coast=u.type==='f'?(to.split('/')[1]||null):null;
+  }
+ }
+ const retreating=positions.filter(u=>outcome.dislodged.has(u.id));
+ const onBoard=positions.filter(u=>!outcome.dislodged.has(u.id));
+ const occupied=new Set(onBoard.map(u=>u.at));
+ const retreats=retreating.map(u=>{
+  const banned=dislodgers[u.id];
+  const choices=destinations(u).filter(t=>!occupied.has(toProvince(t)) && toProvince(t)!==banned && !standoffs.has(toProvince(t)));
+  return {...u,from:byId[u.id].at,attackedFrom:banned,choices};
+ });
+ const descriptions=[];
+ for(const u of game.units){
+  const o=orders[u.id];
+  if(o.kind==='move'){
+   descriptions.push(`${u.power.toUpperCase()} ${u.type.toUpperCase()} ${display(u.at)} → ${display(o.to)}: ${moveSuccess[u.id]?'SUCCESS':'BOUNCE / FAILED'}`);
+  }else if(o.kind==='support-hold' || o.kind==='support-move'){
+   const live=outcome.activeSupports.some(s=>s.id===u.id);
+   descriptions.push(`${u.power.toUpperCase()} ${u.type.toUpperCase()} ${display(u.at)}: ${live?'SUPPORT VALID':'SUPPORT CUT / VOID'}`);
+  }
+ }
+ return {positions:onBoard,retreats,standoffs:[...standoffs],logs:[...invalid,...descriptions],strengths:outcome.attackStrength};
+}
+function applyMovement(game){
+ if(game.phase!=='orders')return false;
+ const summary=resolveMovement(game);
+ game.units=summary.positions;
+ game.result={season:game.season,year:game.year,logs:summary.logs,standoffs:summary.standoffs,retreats:summary.retreats.map(x=>({power:x.power,at:x.from,choices:x.choices.map(display)}))};
+ game.history.push({year:game.year,season:game.season,logs:summary.logs});
+ game.orders={};
+ if(summary.retreats.length){game.phase='retreats';game.retreats=summary.retreats;game.retreatOrders={};}
+ else endSeason(game);
+ return true;
+}
+function resolveRetreats(game){
+ if(game.phase!=='retreats')return false;
+ const selected=game.retreats.map(u=>({unit:u,to:game.retreatOrders?.[u.id]||null}));
+ const count={};for(const r of selected){if(r.to && r.unit.choices.includes(r.to))(count[toProvince(r.to)] ||= 0,count[toProvince(r.to)]++);}
+ const logs=[];
+ for(const r of selected){
+  const good=r.to && r.unit.choices.includes(r.to) && count[toProvince(r.to)]===1;
+  if(good){game.units.push({...r.unit,at:toProvince(r.to),coast:r.unit.type==='f'?(r.to.split('/')[1]||null):null,from:undefined,choices:undefined,attackedFrom:undefined});}
+  logs.push(`${r.unit.power.toUpperCase()} ${r.unit.type.toUpperCase()} ${display(r.unit.from)}: ${good?'retreat to '+display(r.to):'DISBAND'}`);
+ }
+ game.history.push({year:game.year,season:game.season,logs});
+ game.result={season:game.season,year:game.year,logs};
+ delete game.retreats;delete game.retreatOrders;
+ endSeason(game);return true;
+}
+function endSeason(game){
+ if(game.season==='Spring'){game.season='Fall';game.phase='orders';}
+ else{
+  for(const u of game.units){if(PROVINCES[u.at].kind==='s')game.owned[u.at]=u.power;}
+  game.season='Winter';game.phase='adjust';game.adjustOrders={};
+  if(POWERS.every(p=>difference(game,p.id)===0))finishWinter(game);
+ }
+}
+function difference(game,power){return Object.values(game.owned).filter(x=>x===power).length-game.units.filter(u=>u.power===power).length}
+function buildOptions(game,power){
+ const occupied=new Set(game.units.map(u=>u.at));
+ return CENTERS.filter(id=>PROVINCES[id].home===power && game.owned[id]===power && !occupied.has(id)).flatMap(id=>{
+  const arr=[{type:'a',at:id,coast:null}];
+  if(FLEET_GRAPH[id])arr.push({type:'f',at:id,coast:null});
+  for(const coast of ['nc','sc','ec']) if(FLEET_GRAPH[`${id}/${coast}`])arr.push({type:'f',at:id,coast});
+  return arr;
+ });
+}
+function finishWinter(game){
+ if(game.phase!=='adjust')return false;
+ // Disbands are compulsory. Do not quietly make arbitrary disbands for the player.
+ for(const power of POWERS){
+  const delta=difference(game,power.id);
+  if(delta<0 && unique((game.adjustOrders?.[power.id]||[]).filter(x=>typeof x==='string' && game.units.some(u=>u.id===x&&u.power===power.id))).length< -delta)return false;
+ }
+ const logs=[];
+ for(const power of POWERS){
+  const delta=difference(game,power.id), chosen=game.adjustOrders?.[power.id]||[];
+  if(delta>0){
+   let count=0;
+   for(const spec of chosen){
+    if(count>=delta)break;
+    if(!buildOptions(game,power.id).some(x=>x.at===spec.at&&x.type===spec.type&&x.coast===spec.coast))continue;
+    game.units.push({id:`${power.id}-${spec.type}-${spec.at}-${game.year}`,power:power.id,type:spec.type,at:spec.at,coast:spec.coast||null});
+    logs.push(`${power.name} builds ${spec.type.toUpperCase()} ${display(spec.at)}`);count++;
+   }
+  }else if(delta<0){
+   const ids=new Set(chosen.filter(s=>typeof s==='string'));
+   let needed=-delta;
+   for(const id of ids){if(needed<=0)break; const i=game.units.findIndex(u=>u.id===id&&u.power===power.id);
+    if(i>=0){logs.push(`${power.name} disbands ${display(game.units[i].at)}`);game.units.splice(i,1);needed--;}
+   }
+  }
+ }
+ game.history.push({year:game.year,season:'Winter',logs});
+ game.year++;game.season='Spring';game.phase='orders';game.orders={};game.adjustOrders={};game.result={year:game.year-1,season:'Winter',logs};return true;
+}
+
+</script>
+ <script>
+const $=sel=>document.querySelector(sel);
+const STORAGE_KEY='diplomacy-1901-prototype-v1';
+let game=loadSaved();
+let activePower='aus', selectedId=null, mapScale=1;
+const SVGNS='http://www.w3.org/2000/svg';
+let atlasCache=null;
+function loadSaved(){
+ try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY));
+  if(value && Array.isArray(value.units) && value.owned && ['orders','retreats','adjust'].includes(value.phase) && ['Spring','Fall','Winter'].includes(value.season))return value;
+ }catch(_){}
+ return initialGame();
+}
+function persist(){try{localStorage.setItem(STORAGE_KEY,JSON.stringify(game))}catch(_){} }
+function power(p){return POWERS.find(x=>x.id===p)}
+function ownedCount(p){return Object.values(game.owned).filter(id=>id===p).length}
+function byID(id){return game.units.find(u=>u.id===id)}
+function abbrev(id){return id.toUpperCase()}
+function orderText(order){
+ if(!order || order.kind==='hold') return 'HOLD';
+ if(order.kind==='move')return `→ ${display(order.to)}`;
+ const target=byID(order.target);
+ if(order.kind==='support-hold')return `SUPPORT ${target?display(target.at):'?'} HOLD`;
+ if(order.kind==='support-move')return `SUPPORT ${target?display(target.at):'?'} → ${display(order.to)}`;
+ return 'HOLD';
+}
+function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+function render(){
+ if(game.phase==='orders' && !game.units.some(u=>u.id===selectedId && u.power===activePower))selectedId=game.units.find(u=>u.power===activePower)?.id||null;
+ $('#mainTitle').textContent=game.phase==='orders'?'The Great Powers':game.phase==='retreats'?'After the Battle':'Winter Council';
+ $('#phasePill').textContent=game.phase==='orders'?'MOVEMENT':game.phase==='retreats'?'RETREATS':'ADJUSTMENTS';
+ $('#dateLabel').innerHTML=`${game.season.toUpperCase()} <span>${game.year}</span>`;
+ $('#powerTitle').textContent=power(activePower).name.toUpperCase();
+ renderPowers();renderUnits();renderEditor();renderAdvance();renderReport();drawMap();persist();
+}
+function renderPowers(){
+ $('#powerList').innerHTML=POWERS.map(p=>`<button type="button" class="power-button ${activePower===p.id?'active':''}" data-power="${p.id}"><span class="dot" style="background:${p.color}"></span><span><div class="power-name">${escapeHTML(p.name)}</div><div class="power-count">${game.units.filter(u=>u.power===p.id).length} units · ${ownedCount(p.id)} SC</div></span></button>`).join('');
+ $('#powerList').querySelectorAll('[data-power]').forEach(btn=>btn.onclick=()=>{activePower=btn.dataset.power;selectedId=game.units.find(u=>u.power===activePower)?.id||null;render()});
+}
+function renderUnits(){
+ const root=$('#unitList');
+ if(game.phase==='adjust'){
+  const diff=difference(game,activePower),current=game.adjustOrders?.[activePower]||[];
+  if(!diff){root.innerHTML='<p class="stat-note">No adjustment necessary for this power.</p>';return;}
+  if(diff>0){
+   root.innerHTML=`<p class="stat-note">${diff} new unit${diff>1?'s':''} permitted. Selected: ${current.length}. Empty eligible home centers only.</p>`+
+    (current.map((o,i)=>`<div class="choice-row"><span>${o.type==='a'?'Army':'Fleet'} ${escapeHTML(display(o.at+(o.coast?'/'+o.coast:'')))}</span><button data-remove-build="${i}">×</button></div>`).join(''))+
+    '<div class="choice-row"><select class="order-select" id="buildChoice"><option value="">Choose build…</option>'+buildOptions(game,activePower).filter(o=>!current.some(x=>x.at===o.at)).map(o=>`<option value="${o.type}|${o.at}|${o.coast||''}">${o.type==='a'?'Army':'Fleet'} ${escapeHTML(display(o.at+(o.coast?'/'+o.coast:'')))}</option>`).join('')+'</select><button id="addBuild">Add</button></div>';
+   root.querySelectorAll('[data-remove-build]').forEach(b=>b.onclick=()=>{game.adjustOrders[activePower].splice(+b.dataset.removeBuild,1);render()});
+   $('#addBuild').onclick=()=>{let val=$('#buildChoice').value;if(!val || current.length>=diff)return;let [type,at,coast]=val.split('|');game.adjustOrders[activePower] ||= [];game.adjustOrders[activePower].push({type,at,coast:coast||null});render()};
+  }else{
+   const selected=new Set(current);
+   root.innerHTML=`<p class="stat-note">Disband ${-diff} unit${diff<-1?'s':''}. Selected: ${current.length}. All disbands must be designated.</p>`+
+    game.units.filter(u=>u.power===activePower).map(u=>`<button class="unit-row ${selected.has(u.id)?'active':''}" data-disband="${u.id}"><span class="unit-icon">${u.type.toUpperCase()}</span><span class="unit-info"><span class="unit-place">${escapeHTML(display(u.at))}</span><span class="unit-command">${selected.has(u.id)?'MARKED FOR DISBAND':'Keep unit'}</span></span></button>`).join('');
+   root.querySelectorAll('[data-disband]').forEach(b=>b.onclick=()=>{let cur=game.adjustOrders[activePower]||[];cur=cur.includes(b.dataset.disband)?cur.filter(x=>x!==b.dataset.disband):cur.length< -diff?[...cur,b.dataset.disband]:cur;game.adjustOrders[activePower]=cur;render()});
+  }
+  return;
+ }
+ if(game.phase==='retreats'){
+  const retreats=(game.retreats||[]).filter(u=>u.power===activePower);
+  root.innerHTML=retreats.length?retreats.map(u=>`<div class="unit-row"><span class="unit-icon">${u.type.toUpperCase()}</span><div class="unit-info"><div class="unit-place">${escapeHTML(display(u.from))} dislodged</div><div class="unit-command">Attacked from ${escapeHTML(display(u.attackedFrom))}</div></div></div><label class="field-label">Retreat or disband</label><select class="order-select" data-retreat="${u.id}"><option value="">Disband</option>${u.choices.map(c=>`<option value="${c}" ${game.retreatOrders?.[u.id]===c?'selected':''}>${escapeHTML(display(c))}</option>`).join('')}</select>`).join(''):'<p class="stat-note">No dislodged units from this power.</p>';
+  root.querySelectorAll('[data-retreat]').forEach(s=>s.onchange=()=>{game.retreatOrders ||= {};game.retreatOrders[s.dataset.retreat]=s.value||null;persist()});return;
+ }
+ const units=game.units.filter(u=>u.power===activePower);
+ root.innerHTML=units.length?units.map(u=>`<button class="unit-row ${u.id===selectedId?'active':''}" data-unit="${u.id}"><span class="unit-icon">${u.type.toUpperCase()}</span><span class="unit-info"><div class="unit-place">${escapeHTML(display(u.at))}</div><div class="unit-command">${escapeHTML(orderText(game.orders[u.id]))}</div></span><span class="unit-chevron">›</span></button>`).join(''):'<p class="stat-note">This power has no units.</p>';
+ root.querySelectorAll('[data-unit]').forEach(b=>b.onclick=()=>{selectedId=b.dataset.unit;render()});
+}
+function renderEditor(){
+ const root=$('#editor');
+ if(game.phase==='retreats'){root.innerHTML='<p class="editor-help">Choose retreats in the panel above for any dislodged units. A unit may not retreat to its attacker’s origin, an occupied province, or a standoff province.</p>';return;}
+ if(game.phase==='adjust'){root.innerHTML='<p class="editor-help">The number of builds or disbands for each power is determined by the difference between its supply centers and units. Builds are allowed only in vacant, controlled original home centers.</p>';return;}
+ const u=byID(selectedId);
+ if(!u){root.innerHTML='<p class="editor-help">Select a country with at least one unit.</p>';return;}
+ const allowed=availableOrders(game,u), order=game.orders[u.id]||{kind:'hold'};
+ const kinds=[['hold','Hold'],['move','Move'],['support-hold','Support hold'],['support-move','Support move']];
+ root.innerHTML=`<div class="editor-title">${u.type==='a'?'Army':'Fleet'} in ${escapeHTML(display(u.at+(u.coast?'/'+u.coast:'')))}</div><div class="order-modes">${kinds.map(([kind,label])=>`<button class="mode-btn ${order.kind===kind?'active':''}" data-kind="${kind}" ${!allowed.some(o=>o.kind===kind)?'disabled':''}>${label}</button>`).join('')}</div><div id="orderDetails"></div>`;
+ root.querySelectorAll('[data-kind]').forEach(b=>b.onclick=()=>{
+  const o=allowed.find(o=>o.kind===b.dataset.kind);
+  if(o){game.orders[u.id]={...o};render()}
+ });
+ const choices=allowed.filter(o=>o.kind===order.kind);
+ if(order.kind==='hold'){$('#orderDetails').innerHTML='<p class="editor-help">This unit will defend its province, but will not advance.</p>';return;}
+ const label=order.kind==='move'?'MOVE TO':order.kind==='support-hold'?'SUPPORT UNIT HOLDING':'SUPPORT THE FOLLOWING MOVE';
+ const itemLabel=o=>o.kind==='move'?display(o.to):o.kind==='support-hold'?display(byID(o.target)?.at):`${display(byID(o.target)?.at)} → ${display(o.to)}`;
+ const idx=Math.max(0,choices.findIndex(o=>o.to===order.to&&o.target===order.target));
+ $('#orderDetails').innerHTML=`<label class="field-label" for="orderChoice">${label}</label><select id="orderChoice" class="order-select">${choices.map((o,i)=>`<option value="${i}" ${idx===i?'selected':''}>${escapeHTML(itemLabel(o))}</option>`).join('')}</select><p class="editor-help">${order.kind==='move'?'You can also click a highlighted adjacent province on the map.':'A supporting unit gives strength if its support is valid and not cut by an enemy attack.'}</p>`;
+ $('#orderChoice').onchange=()=>{game.orders[u.id]={...choices[Number($('#orderChoice').value)]};render()};
+}
+function renderAdvance(){
+ const button=$('#advanceBtn'), hint=$('#advanceHint');
+ if(game.phase==='orders'){
+  const total=game.units.length,issued=Object.keys(game.orders).length;
+  $('#ordersCount').textContent=`${issued} of ${total} units issued orders`;
+  button.innerHTML=`Resolve ${game.season} ${game.year} <span>→</span>`;
+  hint.textContent='All powers resolve simultaneously. Units without orders hold.';
+  button.disabled=false;
+ }else if(game.phase==='retreats'){
+  $('#ordersCount').textContent=`${game.retreats.length} dislodged unit${game.retreats.length===1?'':'s'}`;
+  button.innerHTML='Resolve retreats <span>→</span>';
+  hint.textContent='Missing retreat choices disband automatically.';
+  button.disabled=false;
+ }else{
+  $('#ordersCount').textContent='Year-end supply center adjustments';
+  button.innerHTML=`Complete winter ${game.year} <span>→</span>`;
+  const pending=POWERS.filter(p=>difference(game,p.id)<0 && (game.adjustOrders?.[p.id]||[]).length < -difference(game,p.id));
+  hint.textContent=pending.length?'Required disbands still needed for: '+pending.map(p=>p.name).join(', ')+'.':'Unchosen builds are waived.';
+  button.disabled=pending.length>0;
+ }
+}
+function renderReport(){
+ const root=$('#reportBody'), r=game.result;
+ if(!r || !r.logs || !r.logs.length){root.innerHTML='<p class="empty-report">No orders have been resolved. Europe is holding its breath.</p>';return;}
+ const lines=r.logs;
+ root.innerHTML=`<div class="report-heading">${r.season} ${r.year} · ${lines.length} dispatches</div><div class="report-list">${lines.map(s=>`<div class="report-entry ${s.includes('SUCCESS')?'success':s.includes('FAILED')||s.includes('BOUNCE')||s.includes('DISBAND')?'fail':''}">${escapeHTML(s)}</div>`).join('')}</div>`;
+}
+// Voronoi regions by half-plane clipping produce a legible, self-contained schematic
+// board without a licensed third-party map image or a network connection.
+function computeAtlas(){
+ const pts=Object.values(PROVINCES),all=[];
+ for(const p of pts){
+  let poly=[[12,12],[1378,12],[1378,882],[12,882]];
+  for(const q of pts){if(p===q)continue;
+   const dx=2*(q.x-p.x),dy=2*(q.y-p.y),bound=q.x*q.x+q.y*q.y-p.x*p.x-p.y*p.y;
+   const inside=pt=>pt[0]*dx+pt[1]*dy-bound<=0.001;
+   const next=[];
+   for(let i=0;i<poly.length;i++){
+    const a=poly[i],b=poly[(i+1)%poly.length],ia=inside(a),ib=inside(b);
+    if(ia)next.push(a);
+    if(ia!==ib){const va=a[0]*dx+a[1]*dy-bound,vb=b[0]*dx+b[1]*dy-bound,t=va/(va-vb);
+     next.push([a[0]+t*(b[0]-a[0]),a[1]+t*(b[1]-a[1])]);}
+   }
+   poly=next;
+   if(!poly.length)break;
+  }
+  all.push({id:p.id,poly:poly.map(pt=>pt.map(v=>Math.round(v*10)/10).join(',')).join(' ')});
+ }
+ return all;
+}
+function mix(hexA,hexB,t){
+ const a=hexA.match(/[\da-f]{2}/gi).map(v=>parseInt(v,16));const b=hexB.match(/[\da-f]{2}/gi).map(v=>parseInt(v,16));
+ return '#'+a.map((v,i)=>Math.round(v*(1-t)+b[i]*t).toString(16).padStart(2,'0')).join('');
+}
+function drawMap(){
+ if(!atlasCache)atlasCache=computeAtlas();
+ const unitAt=Object.fromEntries(game.units.map(u=>[u.at,u]));
+ const retreatAt=Object.fromEntries((game.retreats||[]).map(u=>[u.from,u]));
+ const selected=byID(selectedId);
+ const legal=game.phase==='orders' && selected && selected.power===activePower?new Set(destinations(selected).map(toProvince)):new Set();
+ let svg='<defs><marker id="arrow-head" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#aa682e"/></marker></defs><rect x="0" y="0" width="1390" height="895" fill="#d8e6e6"/>';
+ for(const cell of atlasCache){
+  const p=PROVINCES[cell.id],pwr=power(p.home);
+  let fill=p.kind==='w'?'#d8e6e8':pwr?mix('#f7f1e6',pwr.color,p.kind==='s'?.32:.19):p.kind==='s'?'#f0e4cc':'#ede9db';
+  if(game.owned[p.id] && game.owned[p.id]!==p.home)fill=mix('#f5eee3',power(game.owned[p.id]).color,.4);
+  svg+=`<polygon data-province="${p.id}" class="province ${selected?.at===p.id?'selected-cell':''} ${legal.has(p.id)?'legal-cell':''}" points="${cell.poly}" fill="${fill}"><title>${escapeHTML(p.name)}${p.kind==='s'?' · Supply center':''}</title></polygon>`;
+ }
+ // Province abbreviations and centers are under the pieces.
+ for(const p of Object.values(PROVINCES)){
+  const u=unitAt[p.id],retreat=retreatAt[p.id];
+  if(p.kind==='s')svg+=`<circle class="center-dot" cx="${p.x+19}" cy="${p.y-18}" r="7"/>`;
+  let y=p.y+(u||retreat?31:6);
+  const font=p.kind==='w'?'sea-label':'map-label';
+  svg+=`<text class="${font}" x="${p.x}" y="${y}">${p.id.toUpperCase()}</text>`;
+ }
+ if(game.phase==='orders')for(const u of game.units){
+  if(u.power!==activePower)continue;
+  const order=game.orders[u.id];if(order?.kind!=='move')continue;
+  const p=PROVINCES[u.at],q=PROVINCES[toProvince(order.to)];
+  svg+=`<path class="unit-order-arrow" opacity="${u.id===selectedId?'1':'.48'}" d="M${p.x} ${p.y-13} L${q.x} ${q.y-13}"/>`;
+ }
+ for(const u of [...game.units,...(game.retreats||[])]){
+  const isRetreat=Boolean(u.from); const p=PROVINCES[isRetreat?u.from:u.at];
+  const x=p.x,y=p.y-12;let color=power(u.power).color;
+  svg+=`<g data-unit="${u.id}" data-unit-power="${u.power}" style="cursor:pointer;opacity:${isRetreat?'.6':'1'}"><circle class="unit-token ${selectedId===u.id?'unit-selected':''}" cx="${x}" cy="${y}" r="22" fill="${color}" ${isRetreat?'stroke-dasharray="4 3"':''}/><text class="unit-letter" x="${x}" y="${y+1}" fill="${power(u.power).ink}">${u.type.toUpperCase()}</text><title>${escapeHTML(power(u.power).name)} ${u.type==='a'?'army':'fleet'} in ${escapeHTML(display(p.id))}</title></g>`;
+ }
+ $('#gameMap').innerHTML=svg;
+ $('#gameMap').querySelectorAll('[data-province]').forEach(el=>el.addEventListener('click',()=>mapClick(el.dataset.province)));
+ $('#gameMap').querySelectorAll('[data-unit]').forEach(el=>el.addEventListener('click',e=>{e.stopPropagation();const u=byID(el.dataset.unit);if(u?.power===activePower){selectedId=u.id;render()}else mapClick(u?.at||'')}));
+ $('#gameMap').style.width=`${1320*mapScale}px`;
+ $('#zoomPct').textContent=`${Math.round(mapScale*100)}%`;
+}
+function mapClick(at){
+ if(game.phase!=='orders')return;
+ const occupant=game.units.find(u=>u.at===at);
+ if(occupant?.power===activePower){selectedId=occupant.id;render();return;}
+ const selected=byID(selectedId);
+ if(selected?.power!==activePower)return;
+ const choices=destinations(selected).filter(x=>toProvince(x)===at);
+ if(choices.length){
+  game.orders[selected.id]={kind:'move',to:choices[0]};render();return;
+ }
+}
+$('#advanceBtn').onclick=()=>{
+ if(game.phase==='orders')applyMovement(game);
+ else if(game.phase==='retreats')resolveRetreats(game);
+ else finishWinter(game);
+ render();$('#reportBody').scrollIntoView({behavior:'smooth',block:'nearest'});
+};
+$('#resetBtn').onclick=()=>{if(confirm('Start a new game and replace the autosaved position? Export a save first if you want to keep it.')){game=initialGame();activePower='aus';selectedId=null;render()}};
+$('#exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(game,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`diplomacy-${game.season.toLowerCase()}-${game.year}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)};
+$('#importFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;
+ try{const loaded=JSON.parse(await file.text());if(!Array.isArray(loaded.units)||!loaded.owned||!['orders','retreats','adjust'].includes(loaded.phase)||!['Spring','Fall','Winter'].includes(loaded.season))throw Error('Not a valid game save');game=loaded;selectedId=null;render();}catch(err){alert('Unable to import this game save: '+err.message)}e.target.value='';
+};
+$('#zoomOut').onclick=()=>{mapScale=Math.max(.65,Math.round((mapScale-.15)*100)/100);drawMap()};
+$('#zoomIn').onclick=()=>{mapScale=Math.min(1.85,Math.round((mapScale+.15)*100)/100);drawMap()};
+$('#clearReport').onclick=()=>{game.result=null;renderReport();persist()};
+$('#helpBtn').onclick=()=>$('#helpDialog').showModal();
+$('#closeHelp').onclick=()=>$('#helpDialog').close();
+$('#startBtn').onclick=()=>$('#helpDialog').close();
+render();
+// Fit the whole schematic on desktop; keep touch screens scrollable at readable size.
+if(innerWidth>980){mapScale=Math.min(1,Math.max(.66,($('#mapViewport').clientWidth-3)/1320));drawMap();}
+// Scroll toward the centre of the board in narrow viewports.
+if(innerWidth<900){const vp=$('#mapViewport');vp.scrollLeft=Math.max(0,Math.round((1320-vp.clientWidth)*.45));}
+
+</script>
+</body>
+</html>

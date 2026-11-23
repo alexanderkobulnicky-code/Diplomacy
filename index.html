@@ -1,0 +1,55 @@
+<!doctype html>
+<html lang="en">
+<head>
+ <meta charset="utf-8" />
+ <meta name="viewport" content="width=device-width,initial-scale=1" />
+ <meta name="theme-color" content="#213c37" />
+ <title>Diplomacy · 1901</title>
+ <link rel="icon" href="favicon.svg" type="image/svg+xml" />
+ <link rel="stylesheet" href="style.css" />
+</head>
+<body>
+ <header class="topbar">
+  <div class="brand"><div class="brand-mark">✣</div><div><div class="brand-title">DIPLOMACY</div><div class="brand-tagline">An experiment in the balance of power</div></div></div>
+  <div class="header-actions">
+   <button class="small-button" id="helpBtn">How to play</button>
+   <button class="small-button" id="exportBtn">Export save</button>
+   <label class="small-button file-button" for="importFile">Import save<input id="importFile" type="file" accept=".json,application/json" hidden /></label>
+   <button class="small-button ghost" id="resetBtn">New game</button>
+  </div>
+ </header>
+ <main>
+  <div class="page-heading">
+   <div><div class="eyebrow">THE EUROPEAN THEATRE · 1901</div><h1 id="mainTitle">The Great Powers</h1><p class="intro">A seven-power, hot-seat Diplomacy prototype. You command every country for now; the diplomats arrive later.</p></div>
+   <div class="date-panel"><span id="phasePill" class="phase-pill">MOVEMENT</span><div id="dateLabel" class="date-label">SPRING <span>1901</span></div></div>
+  </div>
+  <div class="game-layout">
+   <section class="map-area">
+    <div class="panel-heading"><div><span class="section-kicker">THE BOARD</span><h2>The European map</h2></div><div class="map-controls"><button id="zoomOut" title="Zoom out">−</button><span id="zoomPct">100%</span><button id="zoomIn" title="Zoom in">+</button></div></div>
+    <div class="map-viewport" id="mapViewport" aria-label="Interactive schematic Diplomacy map"><svg id="gameMap" role="img" aria-label="Map of Diplomacy provinces and units" viewBox="0 0 1390 895"></svg></div>
+    <div class="map-footer"><span><i class="legend-circle unit-legend"></i> Army or fleet token</span><span><i class="legend-circle center-legend"></i> Supply center</span><span><i class="legend-square"></i> Sea area</span><span class="map-note">Schematic, not geographically exact · Tap your own unit, then an adjacent province to move.</span></div>
+    <section class="bulletin"><div class="bulletin-header"><div><span class="section-kicker">DISPATCHES</span><h2>After-action report</h2></div><button id="clearReport" class="text-button">Clear</button></div><div id="reportBody"><p class="empty-report">No orders have been resolved. Europe is holding its breath.</p></div></section>
+   </section>
+   <aside class="sidebar">
+    <section class="side-section power-selector"><div class="section-kicker">CHOOSE A POWER</div><div id="powerList" class="power-list"></div></section>
+    <section class="side-section"><div class="section-kicker">ORDERS FOR <span id="powerTitle">AUSTRIA-HUNGARY</span></div><div class="section-intro">Select a unit to write its orders. Unassigned units will hold.</div><div id="unitList" class="unit-list"></div></section>
+    <section class="side-section editor-panel" id="editorPanel"><div class="section-kicker">ORDER DESK</div><div id="editor"></div></section>
+    <section class="advance-section"><div class="progress-label" id="ordersCount">0 of 22 units ordered</div><button id="advanceBtn" class="advance-button">Resolve Spring 1901 <span>→</span></button><div class="advance-footnote" id="advanceHint">Unassigned units hold. This button resolves all seven powers simultaneously.</div></section>
+    <section class="side-section fine-print"><div class="section-kicker">THIS BUILD</div><p>Orders: hold, move, support hold, support move. Automatic support cuts, bounces, and dislodgement; retreats, fall turns, and winter builds/disbands are supported.</p><p><strong>Not yet implemented:</strong> convoy orders. The map is a schematic prototype and some intricate rules still need additional testing. Suitable for experimentation, not tournament adjudication.</p></section>
+   </aside>
+  </div>
+  <footer>Diplomacy is a classic board game designed by Allan B. Calhamer. This independent, unofficial prototype is not affiliated with its publisher. No AI service or account is required.</footer>
+ </main>
+ <dialog id="helpDialog"><div class="dialog-inner"><div class="dialog-top"><div><div class="section-kicker">FIELD GUIDE</div><h2>How to play this prototype</h2></div><button class="dialog-close" id="closeHelp" aria-label="Close">×</button></div>
+  <p><strong>1. Choose a power.</strong> The seven power tabs show their supply-center and unit counts. At the start, the official 1901 units are deployed.</p>
+  <p><strong>2. Give orders.</strong> Select a unit and choose Hold, Move, Support hold, or Support move. Alternatively, click a unit on the map and then a highlighted adjacent province to order a move. Repeat for the other powers. You can leave units unassigned: they hold.</p>
+  <p><strong>3. Resolve.</strong> Press the large button to process every country's orders simultaneously. The after-action report shows outcomes. If any units are dislodged, enter retreats; otherwise the game advances to the next phase.</p>
+  <p><strong>4. Continue.</strong> Fall supply-center capture and winter builds/disbands are implemented. Convoy orders are not yet available, so this is an early prototype rather than a complete game.</p>
+  <p><strong>5. Keep your game.</strong> Autosave stores the position on this device. Export a JSON backup to preserve it or import one later.</p>
+  <div class="rule-note">Province labels are abbreviated on the map. Hover or tap to select a province and read its full name in the order editor.</div>
+  <button id="startBtn" class="advance-button">Enter the map <span>→</span></button></div></dialog>
+ <script src="data.js"></script>
+ <script src="rules.js"></script>
+ <script src="ui.js"></script>
+</body>
+</html>
