@@ -27,6 +27,9 @@
 .coast-choice{border:1px solid #9bbab2;color:#214a42;background:#edf4ed;padding:15px 10px;border-radius:6px;font-weight:700;cursor:pointer}
 .coast-choice:hover{background:#d8e8e0}
 
+
+/* V8: computer player assignments */
+.player-settings{background:#fbfaf6}.assignment-presets{display:flex;gap:7px;margin:12px 0 10px;flex-wrap:wrap}.assignment-preset{border:1px solid #b9bcae;background:#f3f5ef;color:#28463d;border-radius:5px;padding:9px 10px;font-size:11px;font-weight:650;flex:1;min-width:112px}.assignment-preset:hover{background:#e6eee7}.controller-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px}.controller-item{display:flex;align-items:center;gap:7px;font-size:11px;background:#fff;border:1px solid #e3e1d8;border-radius:5px;padding:7px;min-width:0}.controller-name{flex:1;min-width:0;font-weight:650;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}.controller-dot{width:9px;height:9px;flex-shrink:0;border-radius:50%}.controller-toggle{border:1px solid #c9cfc4;border-radius:4px;background:#f0f4ef;color:#375147;font-weight:750;font-size:10px;padding:6px 8px;min-width:44px}.controller-toggle.computer{background:#e1e8f1;color:#37546d;border-color:#b8c7d7}.power-button .power-count em{font-style:normal;font-weight:750;color:#466b84}.ai-notice{font-size:12px;line-height:1.55;border:1px solid #d8e0e6;background:#edf2f5;border-radius:5px;padding:11px;color:#486070}.power-button.computer-controlled{border-style:dashed}@media(max-width:600px){.controller-list{grid-template-columns:repeat(2,minmax(0,1fr))}.controller-item{padding:6px;gap:5px}.controller-toggle{padding:6px}}
 </style>
 </head>
 <body>
@@ -41,7 +44,7 @@
  </header>
  <main>
   <div class="page-heading">
-   <div><div class="eyebrow">THE EUROPEAN THEATRE · 1901</div><h1 id="mainTitle">The Great Powers</h1><p class="intro">A seven-power, hot-seat Diplomacy prototype. You command every country for now; the diplomats arrive later.</p></div>
+   <div><div class="eyebrow">THE EUROPEAN THEATRE · 1901</div><h1 id="mainTitle">The Great Powers</h1><p class="intro">Play as any of the seven Great Powers, or assign countries to a built-in computer opponent. Diplomacy and negotiations come next.</p></div>
    <div class="date-panel"><span id="phasePill" class="phase-pill">MOVEMENT</span><div id="dateLabel" class="date-label">SPRING <span>1901</span></div></div>
   </div>
   <div class="game-layout">
@@ -53,20 +56,21 @@
    </section>
    <aside class="sidebar">
     <section class="side-section power-selector"><div class="section-kicker">CHOOSE A POWER</div><div id="powerList" class="power-list"></div></section>
-    <section class="side-section"><div class="section-kicker">ORDERS FOR <span id="powerTitle">AUSTRIA-HUNGARY</span></div><div class="section-intro">Select a unit to write its orders. Unassigned units will hold.</div><div id="unitList" class="unit-list"></div></section>
+    <section class="side-section player-settings"><div class="section-kicker">PLAYER ASSIGNMENTS</div><p class="section-intro">Select which countries the computer will command. You can change this at any time.</p><div class="assignment-presets"><button class="assignment-preset" id="soloPreset" type="button">Solo as selected power</button><button class="assignment-preset" id="allHumanPreset" type="button">All human</button></div><div id="controllerList" class="controller-list"></div></section>
+    <section class="side-section"><div class="section-kicker">ORDERS FOR <span id="powerTitle">AUSTRIA-HUNGARY</span></div><div class="section-intro">Select a unit to write its orders. Unassigned human units will hold. Computer orders are chosen when the turn resolves.</div><div id="unitList" class="unit-list"></div></section>
     <section class="side-section editor-panel" id="editorPanel"><div class="section-kicker">ORDER DESK</div><div id="editor"></div></section>
     <section class="advance-section"><div class="progress-label" id="ordersCount">0 of 22 units ordered</div><button id="advanceBtn" class="advance-button">Resolve Spring 1901 <span>→</span></button><div class="advance-footnote" id="advanceHint">Unassigned units hold. This button resolves all seven powers simultaneously.</div></section>
-    <section class="side-section fine-print"><div class="section-kicker">THIS BUILD</div><p>Orders: hold, move, move by convoy, fleet convoy, support hold, support move. A convoy requires one army and a connected chain of sea fleets, each issuing the matching convoy order. Retreats and winter adjustments are supported.</p><p><strong>Experimental:</strong> complex circular convoy dependencies and other intricate rulings need further verification against the official examples. Suitable for experimentation, not tournament adjudication.</p></section>
+    <section class="side-section fine-print"><div class="section-kicker">THIS BUILD</div><p>Human orders: hold, move, move by convoy, fleet convoy, support hold, support move. Computer opponents choose their own moves and supports, with simple one-fleet convoys. A convoy requires one army and a connected chain of sea fleets, each issuing the matching convoy order. Retreats and winter adjustments are supported.</p><p><strong>Experimental:</strong> complex circular convoy dependencies and other intricate rulings need further verification against the official examples. Suitable for experimentation, not tournament adjudication.</p></section>
    </aside>
   </div>
-  <footer>Diplomacy is a classic board game designed by Allan B. Calhamer. This independent, unofficial prototype is not affiliated with its publisher. No AI service or account is required.</footer>
+  <footer>Diplomacy is a classic board game designed by Allan B. Calhamer. This independent, unofficial prototype is not affiliated with its publisher. The built-in computer opponents run offline. No AI service or account is required.</footer>
  </main>
  <dialog id="coastDialog" aria-labelledby="coastDialogTitle"><div class="dialog-inner"><div class="dialog-top"><div><div class="section-kicker">FLEET MOVEMENT</div><h2 id="coastDialogTitle">Choose a coast</h2></div><button class="dialog-close" id="closeCoast" aria-label="Cancel">×</button></div><p id="coastExplanation">Select the destination coast for your fleet.</p><div id="coastChoices" class="coast-choices"></div></div></dialog>
  <dialog id="helpDialog"><div class="dialog-inner"><div class="dialog-top"><div><div class="section-kicker">FIELD GUIDE</div><h2>How to play this prototype</h2></div><button class="dialog-close" id="closeHelp" aria-label="Close">×</button></div>
-  <p><strong>1. Choose a power.</strong> The seven power tabs show their supply-center and unit counts. At the start, the official 1901 units are deployed.</p>
-  <p><strong>2. Give orders.</strong> Select a unit and choose Hold, Move, Convoy move (army), Convoy (sea fleet), Support hold, or Support move. Alternatively, click a unit on the map and then a highlighted province to order an ordinary move. Issue convoy moves from the order desk. Repeat for the other powers. You can leave units unassigned: they hold.</p>
-  <p><strong>3. Resolve.</strong> Press the large button to process every country's orders simultaneously. The after-action report shows outcomes. If any units are dislodged, enter retreats; otherwise the game advances to the next phase.</p>
-  <p><strong>4. Continue.</strong> Fall supply-center capture and winter builds/disbands are implemented. Sea fleets can convoy armies to coastal provinces, including over multisea chains. A dislodged fleet breaks its convoy route unless another valid route survives.</p>
+  <p><strong>1. Assign players.</strong> Select a country, then use “Solo as selected power” to let the computer run the other six. Or mark individual countries Human or Computer. All-human hot seat play is still available. Your choices are saved with the game.</p>
+  <p><strong>2. Give human orders.</strong> Select a unit and choose Hold, Move, Convoy move (army), Convoy (sea fleet), Support hold, or Support move. Alternatively, click a unit on the map and then a highlighted province to order an ordinary move. Issue convoy moves from the order desk. Repeat for the other powers. You can leave units unassigned: they hold.</p>
+  <p><strong>3. Resolve.</strong> The computer supplies legal orders for its countries only when you press Resolve; you can’t see its choices beforehand. Your own orders are never overwritten. The after-action report shows outcomes. If any units are dislodged, enter retreats; otherwise the game advances to the next phase.</p>
+  <p><strong>4. Continue.</strong> Computer powers automatically choose retreats, builds, and disbands. Fall supply-center capture and winter builds/disbands are implemented. Sea fleets can convoy armies to coastal provinces, including over multisea chains. A dislodged fleet breaks its convoy route unless another valid route survives.</p>
   <p><strong>5. Keep your game.</strong> Autosave stores the position on this device. Export a JSON backup to preserve it or import one later.</p>
   <div class="rule-note">Switzerland is impassable. Rome and Venice share a regular land border; armies can move directly between them. After each winter, non-supply-center land adopts the last occupant’s color unless adjacent to land shaded or owned by another power. This color has no rule effect. Convoys need an army order to move by convoy and matching orders from every fleet in a sea-route chain. The NC / SC / EC badges mark separate fleet-access coasts of St. Petersburg, Spain and Bulgaria. Province labels are abbreviated on the map. Hover or tap to select a province and read its full name in the order editor.</div>
   <button id="startBtn" class="advance-button">Enter the map <span>→</span></button></div></dialog>
@@ -467,7 +471,11 @@ function resolveMovement(game){
   }
   throw Error('Adjudication iteration limit exceeded; no orders were applied.');
  }
- for(let attempt=0;attempt<=convoyArmies.length;attempt++){
+ // With no convoyed attacks there is no convoy dependency to iterate.
+ // Trying to re-adjudicate ordinary dislodged moves can create a false
+ // oscillation in head-to-head attacks (e.g. Sweden–Norway swaps).
+ if(!convoyArmies.length)outcome=computeRound(new Set(),forcedFailure);
+ else for(let attempt=0;attempt<=convoyArmies.length;attempt++){
   const hopeful=solveFrom(new Set());
   const cautious=convoyArmies.length?solveFrom(new Set(convoyFleetIds)):hopeful;
   const stableA=hopeful.outcome,stableB=cautious.outcome;
@@ -588,11 +596,196 @@ function finishWinter(game){
 }
 
 </script>
+
+<script>
+// V8: local, deterministic, intentionally lightweight computer opponent.
+// It is a tactical heuristic, NOT a language-model agent or an expert player.
+const CONTROLLER_HUMAN='human', CONTROLLER_COMPUTER='computer';
+function ensureControllers(g){
+ if(!g.controllers||typeof g.controllers!=='object')g.controllers={};
+ for(const p of POWERS)if(![CONTROLLER_HUMAN,CONTROLLER_COMPUTER].includes(g.controllers[p.id]))g.controllers[p.id]=CONTROLLER_HUMAN;
+ return g;
+}
+function isComputer(g,id){return ensureControllers(g).controllers[id]===CONTROLLER_COMPUTER;}
+function assignController(g,id,kind){
+ if(!POWERS.some(p=>p.id===id)||![CONTROLLER_HUMAN,CONTROLLER_COMPUTER].includes(kind))return;
+ ensureControllers(g);g.controllers[id]=kind;
+ // Do not leave the previous human's pending orders attached to an AI power.
+ if(kind===CONTROLLER_COMPUTER){for(const u of g.units.filter(u=>u.power===id))delete g.orders?.[u.id];delete g.adjustOrders?.[id];for(const u of (g.retreats||[]).filter(u=>u.power===id))delete g.retreatOrders?.[u.id];}
+}
+function cpuSeed(g,id){
+ let h=2166136261;for(const c of `${id}-${g.year}-${g.season}-${g.phase}`){h=Math.imul(h^c.charCodeAt(0),16777619)>>>0;}return h;
+}
+function cpuRandom(seed){let state=seed>>>0;return ()=>{state+=0x6D2B79F5;let t=state;t=Math.imul(t^(t>>>15),t|1);t^=t+Math.imul(t^(t>>>7),t|61);return ((t^(t>>>14))>>>0)/4294967296;};}
+function cpuGraphFor(type){return type==='a'?ARMY_GRAPH:FLEET_GRAPH;}
+function cpuDistanceToCenter(g,unit,start){
+ // Distances are calculated from the destination node, including named fleet coasts.
+ const graph=cpuGraphFor(unit.type),seen=new Set([start]),queue=[{node:start,d:0}];
+ for(let i=0;i<queue.length;i++){
+  const {node,d}=queue[i],province=toProvince(node);
+  if(PROVINCES[province]?.kind==='s'&&g.owned[province]!==unit.power)return d;
+  if(d>=8)continue;
+  for(const n of (graph[node]||[]))if(!seen.has(n)){seen.add(n);queue.push({node:n,d:d+1});}
+ }
+ return 9;
+}
+function cpuThreat(g,power,at){
+ return g.units.filter(u=>u.power!==power && destinations(u).some(n=>toProvince(n)===at)).length;
+}
+function cpuCanSupport(g,supporter,target,to,cache){
+ let options=cache.get(supporter.id);
+ if(!options){options=availableOrders(g,supporter);cache.set(supporter.id,options);}
+ return options.some(o=>o.kind==='support-move'&&o.target===target.id&&o.to===to);
+}
+function cpuMoveValue(g,unit,order,occupancy,random){
+ const target=toProvince(order.to),p=PROVINCES[target],other=occupancy[target];
+ if(!p)return -10000;
+ if(other?.power===unit.power)return -500; // Avoid unsupported friendly traffic jams.
+ const mine=g.owned[target]===unit.power;
+ let score=0;
+ if(p.kind==='s'&&!mine)score+=other?70:gameFreeCenterScore(g,target);
+ if(p.kind==='s'&&mine)score+=cpuThreat(g,unit.power,target)?11:2;
+ if(p.kind==='w')score+=2;
+ if(p.kind==='l')score+=3;
+ const before=cpuDistanceToCenter(g,unit,unitNode(unit));
+ const after=cpuDistanceToCenter(g,unit,order.to);
+ score+=(before-after)*17;
+ if(before===9&&after===9)score-=9;
+ if(other?.power!==unit.power&&other){
+  const defenders=cpuThreat(g,unit.power,target);
+  score-=27+Math.max(0,defenders-1)*3; // Need support, not an unsupported frontal attack.
+ }
+ const adjacentThreats=cpuThreat(g,unit.power,target);
+ score-=Math.min(3,adjacentThreats)*5;
+ if(p.kind==='s'&&mine&&adjacentThreats)score+=8;
+ return score+random()*4;
+}
+function gameFreeCenterScore(g,id){return g.owned[id]?95:107;}
+function computerMovementOrders(g,powerId){
+ const units=g.units.filter(u=>u.power===powerId),occupancy=Object.fromEntries(g.units.map(u=>[u.at,u]));
+ const rand=cpuRandom(cpuSeed(g,powerId)),optionsCache=new Map();
+ const plans=Object.fromEntries(units.map(u=>[u.id,{kind:'hold'}]));
+ const moveScores=Object.fromEntries(units.map(u=>[u.id,0]));
+ const proposals=[];
+ for(const u of units){
+  for(const to of destinations(u)){
+   const order={kind:'move',to};
+   proposals.push({u,order,value:cpuMoveValue(g,u,order,occupancy,rand)});
+  }
+ }
+ proposals.sort((a,b)=>b.value-a.value);
+ const usedUnits=new Set(),usedDestinations=new Set();
+ for(const proposal of proposals){
+  const {u,order,value}=proposal,to=toProvince(order.to);
+  if(usedUnits.has(u.id)||usedDestinations.has(to)||value<=3)continue;
+  plans[u.id]=order;moveScores[u.id]=value;usedUnits.add(u.id);usedDestinations.add(to);
+ }
+ // A single friendly fleet at sea may carry a coastal army. This is deliberately
+ // limited to single-fleet convoys; users can still construct any legal convoy.
+ const seaFleets=units.filter(u=>isSeaFleet(g,u));
+ const armies=units.filter(u=>u.type==='a'&&coastalLand(u.at));
+ for(const army of armies){
+  if(moveScores[army.id]>45)continue;
+  let best=null;
+  for(const fleet of seaFleets){
+   if(moveScores[fleet.id]>40)continue;
+   const candidates=Object.values(PROVINCES).filter(p=>p.kind==='s'&&g.owned[p.id]!==powerId&&!usedDestinations.has(p.id)
+    &&!occupancy[p.id]&&hasConvoyPath(g,army.at,p.id,f=>f.id===fleet.id,fleet.at));
+   for(const p of candidates){
+    const value=88+rand()*5-(cpuThreat(g,powerId,p.id)*4);
+    if((!best||value>best.value)&&value>moveScores[army.id]+moveScores[fleet.id]+20)best={fleet,to:p.id,value};
+   }
+  }
+  if(best){
+   if(plans[army.id].kind==='move')usedDestinations.delete(toProvince(plans[army.id].to));
+   if(plans[best.fleet.id].kind==='move')usedDestinations.delete(toProvince(plans[best.fleet.id].to));
+   plans[army.id]={kind:'move',to:best.to,via:'convoy'};
+   plans[best.fleet.id]={kind:'convoy',target:army.id,to:best.to};
+   usedDestinations.add(best.to);moveScores[army.id]=best.value;moveScores[best.fleet.id]=best.value;
+  }
+ }
+ // Add support for a contested attack when a less productive unit can reach it.
+ for(const moving of units.filter(u=>plans[u.id].kind==='move').sort((a,b)=>moveScores[b.id]-moveScores[a.id])){
+  const to=toProvince(plans[moving.id].to),defender=occupancy[to];
+  if(!defender || defender.power===powerId)continue;
+  const supporters=units.filter(u=>u.id!==moving.id && plans[u.id].kind!=='convoy' && moveScores[u.id]<35 && cpuCanSupport(g,u,moving,plans[moving.id].to,optionsCache));
+  if(supporters.length){
+   const supporter=supporters.sort((a,b)=>moveScores[a.id]-moveScores[b.id])[0];
+   if(plans[supporter.id].kind==='move')usedDestinations.delete(toProvince(plans[supporter.id].to));
+   plans[supporter.id]={kind:'support-move',target:moving.id,to:plans[moving.id].to};moveScores[supporter.id]=35;
+  }
+ }
+ // Secure threatened friendly garrisons when otherwise holding.
+ for(const u of units){
+  if(plans[u.id].kind!=='hold')continue;
+  const friend=units.filter(f=>f.id!==u.id&&plans[f.id].kind==='hold'&&cpuThreat(g,powerId,f.at)>0)
+   .find(f=>availableOrders(g,u).some(o=>o.kind==='support-hold'&&o.target===f.id));
+  if(friend)plans[u.id]={kind:'support-hold',target:friend.id};
+ }
+ // The adjudicator's own legal-order list is the final authority.
+ const results={};
+ for(const u of units){
+  const proposed=plans[u.id];
+  const valid=availableOrders(g,u).some(o=>o.kind===proposed.kind&&(o.to||null)===(proposed.to||null)&&(o.target||null)===(proposed.target||null)&&(o.via||null)===(proposed.via||null));
+  results[u.id]=valid?proposed:{kind:'hold'};
+ }
+ return results;
+}
+function computerRetreatOrders(g,powerId,used){
+ const orders={};const rand=cpuRandom(cpuSeed(g,powerId));
+ for(const u of (g.retreats||[]).filter(u=>u.power===powerId)){
+  let best=null,score=-Infinity;
+  for(const to of u.choices){
+   if(used.has(toProvince(to)))continue;
+   const p=PROVINCES[toProvince(to)];
+   const value=(p.kind==='s'?g.owned[p.id]===powerId?65:55:10)-cpuDistanceToCenter(g,u,to)*5-cpuThreat(g,powerId,p.id)*15+rand();
+   if(value>score){score=value;best=to;}
+  }
+  orders[u.id]=best;
+  if(best)used.add(toProvince(best));
+ }
+ return orders;
+}
+function computerAdjustmentOrders(g,powerId){
+ const delta=difference(g,powerId),rand=cpuRandom(cpuSeed(g,powerId));
+ if(delta===0)return [];
+ if(delta<0){
+  return g.units.filter(u=>u.power===powerId).map(u=>({u,value:cpuDistanceToCenter(g,u,unitNode(u))*9+(g.owned[u.at]===powerId?-22:0)-cpuThreat(g,powerId,u.at)*5+rand()}))
+   .sort((a,b)=>b.value-a.value).slice(0,-delta).map(x=>x.u.id);
+ }
+ const buildable=buildOptions(g,powerId),out=[],used=new Set();
+ const fleetCount=g.units.filter(u=>u.power===powerId&&u.type==='f').length;
+ const armyCount=g.units.filter(u=>u.power===powerId&&u.type==='a').length;
+ for(let i=0;i<delta;i++){
+  const ranked=buildable.filter(o=>!used.has(o.at)).map(o=>{
+   const candidate={power:powerId,type:o.type,at:o.at,coast:o.coast};
+   let score=80-cpuDistanceToCenter(g,candidate,unitNode(candidate))*10;
+   if(o.type==='a')score+=armyCount<=fleetCount?12:0;
+   if(o.type==='f')score+=fleetCount<Math.max(1,Math.floor((armyCount+fleetCount)/3))?15:-4;
+   score+=cpuThreat(g,powerId,o.at)*4+rand();return {o,score};
+  }).sort((a,b)=>b.score-a.score);
+  if(!ranked.length)break;out.push(ranked[0].o);used.add(ranked[0].o.at);
+ }
+ return out;
+}
+function computerPreparePhase(g){
+ ensureControllers(g);
+ if(g.phase==='orders')for(const p of POWERS){
+  if(!isComputer(g,p.id))continue;
+  for(const u of g.units.filter(u=>u.power===p.id))delete g.orders[u.id];
+  Object.assign(g.orders,computerMovementOrders(g,p.id));
+ }else if(g.phase==='retreats'){
+  const used=new Set(Object.entries(g.retreatOrders||{}).filter(([id,to])=>to && (g.retreats||[]).some(u=>u.id===id&&!isComputer(g,u.power))).map(([,to])=>toProvince(to)));
+  for(const p of POWERS)if(isComputer(g,p.id))Object.assign(g.retreatOrders||=( {} ),computerRetreatOrders(g,p.id,used));
+ }else if(g.phase==='adjust')for(const p of POWERS)if(isComputer(g,p.id))g.adjustOrders[p.id]=computerAdjustmentOrders(g,p.id);
+}
+</script>
  <script>
 const $=sel=>document.querySelector(sel);
 const STORAGE_KEY='diplomacy-1901-prototype-v1';
 let game=loadSaved();
 ensureVisualState(game);
+ensureControllers(game);
 let activePower='aus', selectedId=null, mapScale=1;
 const SVGNS='http://www.w3.org/2000/svg';
 let atlasCache=null;
@@ -623,14 +816,25 @@ function render(){
  $('#phasePill').textContent=game.phase==='orders'?'MOVEMENT':game.phase==='retreats'?'RETREATS':'ADJUSTMENTS';
  $('#dateLabel').innerHTML=`${game.season.toUpperCase()} <span>${game.year}</span>`;
  $('#powerTitle').textContent=power(activePower).name.toUpperCase();
- renderPowers();renderUnits();renderEditor();renderAdvance();renderReport();drawMap();persist();
+ renderPowers();renderControllers();renderUnits();renderEditor();renderAdvance();renderReport();drawMap();persist();
 }
 function renderPowers(){
- $('#powerList').innerHTML=POWERS.map(p=>`<button type="button" class="power-button ${activePower===p.id?'active':''}" data-power="${p.id}"><span class="dot" style="background:${p.color}"></span><span><div class="power-name">${escapeHTML(p.name)}</div><div class="power-count">${game.units.filter(u=>u.power===p.id).length} units · ${ownedCount(p.id)} SC</div></span></button>`).join('');
+ $('#powerList').innerHTML=POWERS.map(p=>`<button type="button" class="power-button ${activePower===p.id?'active':''} ${isComputer(game,p.id)?'computer-controlled':''}" data-power="${p.id}"><span class="dot" style="background:${p.color}"></span><span><div class="power-name">${escapeHTML(p.name)}</div><div class="power-count">${game.units.filter(u=>u.power===p.id).length} units · ${ownedCount(p.id)} SC ${isComputer(game,p.id)?'<em>· AI</em>':''}</div></span></button>`).join('');
  $('#powerList').querySelectorAll('[data-power]').forEach(btn=>btn.onclick=()=>{activePower=btn.dataset.power;selectedId=game.units.find(u=>u.power===activePower)?.id||null;render()});
+}
+function renderControllers(){
+ const root=$('#controllerList');
+ root.innerHTML=POWERS.map(p=>`<div class="controller-item"><span class="controller-dot" style="background:${p.color}"></span><span class="controller-name" title="${escapeHTML(p.name)}">${escapeHTML(p.name)}</span><button class="controller-toggle ${isComputer(game,p.id)?'computer':''}" data-controller="${p.id}" type="button" aria-label="Change ${escapeHTML(p.name)} controller">${isComputer(game,p.id)?'AI':'Human'}</button></div>`).join('');
+ root.querySelectorAll('[data-controller]').forEach(btn=>btn.onclick=()=>{const p=btn.dataset.controller;assignController(game,p,isComputer(game,p)?CONTROLLER_HUMAN:CONTROLLER_COMPUTER);render()});
+ $('#soloPreset').textContent=`Solo as ${power(activePower).name}`;
 }
 function renderUnits(){
  const root=$('#unitList');
+ if(isComputer(game,activePower)){
+  const count=game.phase==='orders'?game.units.filter(u=>u.power===activePower).length:game.phase==='retreats'?(game.retreats||[]).filter(u=>u.power===activePower).length:Math.abs(difference(game,activePower));
+  root.innerHTML=`<div class="ai-notice"><strong>Computer controlled.</strong> ${count} ${game.phase==='orders'?'unit(s) will receive orders':game.phase==='retreats'?'retreat(s) will be decided':'winter adjustment(s) will be chosen'} automatically when you press the resolve button. Its plans stay sealed until then.</div>`;
+  return;
+ }
  if(game.phase==='adjust'){
   const diff=difference(game,activePower),current=game.adjustOrders?.[activePower]||[];
   if(!diff){root.innerHTML='<p class="stat-note">No adjustment necessary for this power.</p>';return;}
@@ -659,6 +863,7 @@ function renderUnits(){
 }
 function renderEditor(){
  const root=$('#editor');
+ if(isComputer(game,activePower)){root.innerHTML='<p class="editor-help">This power is computer-controlled. Select a Human power to enter orders, or change its assignment above. The computer does not use any external AI service.</p>';return;}
  if(game.phase==='retreats'){root.innerHTML='<p class="editor-help">Choose retreats in the panel above for any dislodged units. A unit may not retreat to its attacker’s origin, an occupied province, or a standoff province.</p>';return;}
  if(game.phase==='adjust'){root.innerHTML='<p class="editor-help">The number of builds or disbands for each power is determined by the difference between its supply centers and units. Builds are allowed only in vacant, controlled original home centers.</p>';return;}
  const u=byID(selectedId);
@@ -682,21 +887,21 @@ function renderEditor(){
 function renderAdvance(){
  const button=$('#advanceBtn'), hint=$('#advanceHint');
  if(game.phase==='orders'){
-  const total=game.units.length,issued=Object.keys(game.orders).length;
-  $('#ordersCount').textContent=`${issued} of ${total} units issued orders`;
+  const humanUnits=game.units.filter(u=>!isComputer(game,u.power)),total=humanUnits.length,issued=humanUnits.filter(u=>game.orders[u.id]).length;
+  $('#ordersCount').textContent=`${issued} of ${total} human units ordered · ${game.units.length-total} computer units`;
   button.innerHTML=`Resolve ${game.season} ${game.year} <span>→</span>`;
-  hint.textContent='All powers resolve simultaneously. Convoying fleets must receive matching convoy orders; units without orders hold.';
+  hint.textContent='Human orders stay as entered. Computer orders are generated together when you resolve. Unassigned human units hold.';
   button.disabled=false;
  }else if(game.phase==='retreats'){
   $('#ordersCount').textContent=`${game.retreats.length} dislodged unit${game.retreats.length===1?'':'s'}`;
   button.innerHTML='Resolve retreats <span>→</span>';
-  hint.textContent='Missing retreat choices disband automatically.';
+  hint.textContent='Computer-controlled powers pick retreats automatically. Unassigned human retreats disband.';
   button.disabled=false;
  }else{
   $('#ordersCount').textContent='Year-end supply center adjustments';
   button.innerHTML=`Complete winter ${game.year} <span>→</span>`;
-  const pending=POWERS.filter(p=>difference(game,p.id)<0 && (game.adjustOrders?.[p.id]||[]).length < -difference(game,p.id));
-  hint.textContent=pending.length?'Required disbands still needed for: '+pending.map(p=>p.name).join(', ')+'.':'Unchosen builds are waived.';
+  const pending=POWERS.filter(p=>!isComputer(game,p.id) && difference(game,p.id)<0 && (game.adjustOrders?.[p.id]||[]).length < -difference(game,p.id));
+  hint.textContent=pending.length?'Human disbands still required for: '+pending.map(p=>p.name).join(', ')+'.':'Computer powers will make their adjustments automatically. Unchosen human builds are waived.';
   button.disabled=pending.length>0;
  }
 }
@@ -739,7 +944,7 @@ function drawMap(){
  const unitAt=Object.fromEntries(game.units.map(u=>[u.at,u]));
  const retreatAt=Object.fromEntries((game.retreats||[]).map(u=>[u.from,u]));
  const selected=byID(selectedId);
- const legal=game.phase==='orders' && selected && selected.power===activePower?new Set(allMoveChoices(game,selected).map(o=>toProvince(o.to))):new Set();
+ const legal=game.phase==='orders' && !isComputer(game,activePower) && selected && selected.power===activePower?new Set(allMoveChoices(game,selected).map(o=>toProvince(o.to))):new Set();
  let svg='<defs><marker id="arrow-head" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#aa682e"/></marker></defs><rect x="0" y="0" width="1390" height="895" fill="#d8e6e6"/>';
  for(const cell of atlasCache){
   const p=PROVINCES[cell.id],pwr=power(p.home);
@@ -765,12 +970,12 @@ function drawMap(){
  }
  // Split coast badges are visibly distinct on the map; reachable coast badges
  // can be tapped directly instead of selecting the province as a whole.
- const coastOptions=selected && selected.power===activePower && game.phase==='orders' ? new Set(destinations(selected)) : new Set();
+ const coastOptions=selected && selected.power===activePower && !isComputer(game,activePower) && game.phase==='orders' ? new Set(destinations(selected)) : new Set();
  for(const m of COAST_MARKERS){
   const coast=m.node.split('/')[1].toUpperCase(), clickable=coastOptions.has(m.node);
   svg+=`<g class="coast-tag ${clickable?'coast-tag-active':''}" ${clickable?`data-coast-target="${m.node}"`:''}><rect x="${m.x-15}" y="${m.y-11}" width="30" height="22" rx="7"/><text x="${m.x}" y="${m.y+1}">${coast}</text><title>${escapeHTML(display(m.node))}${clickable?' — issue fleet move':''}</title></g>`;
  }
- if(game.phase==='orders')for(const u of game.units){
+ if(game.phase==='orders' && !isComputer(game,activePower))for(const u of game.units){
   if(u.power!==activePower)continue;
   const order=game.orders[u.id];if(order?.kind!=='move')continue;
   const p=PROVINCES[u.at],q=PROVINCES[toProvince(order.to)];
@@ -791,7 +996,7 @@ function drawMap(){
  $('#zoomPct').textContent=`${Math.round(mapScale*100)}%`;
 }
 function mapClick(at){
- if(game.phase!=='orders')return;
+ if(game.phase!=='orders'||isComputer(game,activePower))return;
  const occupant=game.units.find(u=>u.at===at);
  if(occupant?.power===activePower){selectedId=occupant.id;render();return;}
  const selected=byID(selectedId);
@@ -805,16 +1010,19 @@ function mapClick(at){
  }
 }
 $('#advanceBtn').onclick=()=>{
+ computerPreparePhase(game);
  if(game.phase==='orders')applyMovement(game);
  else if(game.phase==='retreats')resolveRetreats(game);
  else finishWinter(game);
  render();$('#reportBody').scrollIntoView({behavior:'smooth',block:'nearest'});
 };
-$('#resetBtn').onclick=()=>{if(confirm('Start a new game and replace the autosaved position? Export a save first if you want to keep it.')){game=initialGame();activePower='aus';selectedId=null;render()}};
+$('#resetBtn').onclick=()=>{if(confirm('Start a new game and replace the autosaved position? Export a save first if you want to keep it.')){const savedControllers={...game.controllers};game=initialGame();game.controllers=savedControllers;activePower=POWERS.find(p=>!isComputer(game,p.id))?.id||'aus';selectedId=null;render()}};
 $('#exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(game,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`diplomacy-${game.season.toLowerCase()}-${game.year}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 $('#importFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;
- try{const loaded=JSON.parse(await file.text());if(!Array.isArray(loaded.units)||!loaded.owned||!['orders','retreats','adjust'].includes(loaded.phase)||!['Spring','Fall','Winter'].includes(loaded.season))throw Error('Not a valid game save');game=loaded;ensureVisualState(game);selectedId=null;render();}catch(err){alert('Unable to import this game save: '+err.message)}e.target.value='';
+ try{const loaded=JSON.parse(await file.text());if(!Array.isArray(loaded.units)||!loaded.owned||!['orders','retreats','adjust'].includes(loaded.phase)||!['Spring','Fall','Winter'].includes(loaded.season))throw Error('Not a valid game save');game=loaded;ensureVisualState(game);ensureControllers(game);selectedId=null;render();}catch(err){alert('Unable to import this game save: '+err.message)}e.target.value='';
 };
+$('#soloPreset').onclick=()=>{for(const p of POWERS)assignController(game,p.id,p.id===activePower?CONTROLLER_HUMAN:CONTROLLER_COMPUTER);render()};
+$('#allHumanPreset').onclick=()=>{for(const p of POWERS)assignController(game,p.id,CONTROLLER_HUMAN);render()};
 $('#zoomOut').onclick=()=>{mapScale=Math.max(.65,Math.round((mapScale-.15)*100)/100);drawMap()};
 $('#zoomIn').onclick=()=>{mapScale=Math.min(1.85,Math.round((mapScale+.15)*100)/100);drawMap()};
 $('#clearReport').onclick=()=>{game.result=null;renderReport();persist()};
