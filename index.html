@@ -8,7 +8,7 @@
  
  <style>
 :root{--forest:#223e37;--forest-dark:#192d28;--paper:#f5f1e8;--card:#fffdf8;--gold:#bb9053;--ink:#25302c;--muted:#6b766e;--line:#ddd9ce;--shadow:0 8px 35px rgba(35,48,43,.08)}
-*{box-sizing:border-box}html{background:var(--paper)}body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}button,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.48}button:focus-visible,select:focus-visible{outline:3px solid #c18d40;outline-offset:2px}.topbar{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:18px;background:var(--forest);color:#f6f1e6;padding:13px clamp(16px,4vw,60px);border-bottom:3px solid #bd955d}.brand{display:flex;align-items:center;gap:13px}.brand-mark{font-size:36px;color:#dabb7d;line-height:1}.brand-title{font-family:Georgia,serif;font-size:23px;letter-spacing:.17em}.brand-tagline{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#c5d3cb;margin-top:3px}.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.small-button{display:inline-flex;align-items:center;justify-content:center;background:#33534a;color:#f9f4e8;border:1px solid #668478;padding:9px 12px;border-radius:5px;font-size:12px;min-height:36px}.small-button:hover{background:#416459}.small-button.ghost{background:transparent;border-color:#81958a}.file-button{cursor:pointer}main{max-width:1810px;margin:0 auto;padding:28px clamp(15px,2.3vw,38px) 20px}.page-heading{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-bottom:27px}.eyebrow,.section-kicker{font-size:10px;color:#9b7547;letter-spacing:.17em;font-weight:750;text-transform:uppercase}h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:normal}h1{font-size:clamp(29px,3.2vw,46px);margin:9px 0 7px;line-height:1.05}h2{font-size:21px;margin:7px 0 0}.intro{color:var(--muted);margin:8px 0 0;max-width:800px;line-height:1.55}.date-panel{text-align:right;white-space:nowrap}.phase-pill{font-size:10px;letter-spacing:.1em;background:#e4d8b9;color:#625126;border-radius:25px;padding:6px 12px;font-weight:750}.date-label{font-family:Georgia,serif;font-size:21px;letter-spacing:.05em;margin-top:12px}.date-label span{color:#a47e4a}.game-layout{display:grid;grid-template-columns:minmax(0,1fr) 332px;gap:18px;align-items:start}.map-area,.sidebar{min-width:0}.panel-heading,.bulletin-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}.map-controls{display:flex;align-items:center;gap:8px;color:#7c786f;font-size:11px}.map-controls button{width:30px;height:30px;border:1px solid var(--line);background:white;border-radius:5px;color:var(--forest);font-size:20px;line-height:1}.map-viewport{border:1px solid #c9d0c6;border-radius:7px;background:#dce9e7;overflow:auto;box-shadow:var(--shadow);position:relative;max-height:min(76vh,820px);scrollbar-color:#b6c4bc transparent;touch-action:pan-x pan-y}.map-viewport svg{display:block;width:1320px;max-width:none;height:auto;user-select:none}.province{stroke:#b5b9ad;stroke-width:1.6;cursor:pointer;transition:fill .14s}.province:hover{stroke:#786544;stroke-width:3;filter:brightness(1.06)}.province.selected-cell{stroke:#a36d24;stroke-width:4}.province.legal-cell{stroke:#357a70;stroke-width:3;stroke-dasharray:5 4}.map-label{font-size:12px;font-weight:680;letter-spacing:1px;fill:#52645c;pointer-events:none;text-anchor:middle;dominant-baseline:central}.sea-label{font-size:12px;fill:#6a9298;font-weight:650;letter-spacing:1.2px}.center-occupied-rim{fill:#f9f3df;stroke:#7a7463;stroke-width:2;pointer-events:none}.center-dot{fill:#f9f3df;stroke:#7a7463;stroke-width:2;pointer-events:none}.unit-token{stroke:#fdf5df;stroke-width:3.6;cursor:pointer;filter:drop-shadow(0px 3px 2px #0003)}.unit-letter{font-size:20px;font-family:Georgia,serif;pointer-events:none;text-anchor:middle;dominant-baseline:central;font-weight:bold}.unit-selected{stroke:#f6c96d;stroke-width:7;filter:drop-shadow(0 0 7px #d18c34aa)}.unit-order-arrow{stroke:#aa682e;stroke-width:4;fill:none;marker-end:url(#arrow-head);pointer-events:none;stroke-dasharray:6 3}.map-footer{display:flex;align-items:center;gap:15px;flex-wrap:wrap;color:#737b70;font-size:11px;margin:11px 0 23px;line-height:1.45}.legend-circle{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px;border:2px solid #686f62}.unit-legend{background:#d17c73}.center-legend{background:#fff6d7}.legend-square{display:inline-block;width:10px;height:10px;background:#d4e7e8;margin-right:5px;border:1px solid #afcbcc}.map-note{flex:1;min-width:200px;text-align:right}.sidebar{background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);overflow:hidden}.side-section{padding:18px;border-bottom:1px solid var(--line)}.power-selector{padding-bottom:14px}.power-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:13px}.power-button{border:1px solid #e0ded6;border-radius:6px;background:#faf9f5;padding:10px 8px;min-height:52px;display:flex;align-items:center;gap:9px;color:var(--ink);text-align:left}.power-button:hover{border-color:#a3aa9d}.power-button.active{background:#eef1e9;border-color:var(--forest);box-shadow:inset 0 0 0 1px var(--forest)}.power-button .dot{flex-shrink:0;width:11px;height:11px;border-radius:50%;border:1px solid #0001}.power-button .power-name{font-weight:700;font-size:12px;line-height:1.2}.power-button .power-count{font-size:10px;color:#7c8077;margin-top:3px}.section-intro{font-size:12px;line-height:1.55;color:#788079;margin-top:10px}.unit-list{margin-top:12px;display:flex;flex-direction:column;gap:7px}.unit-row{display:flex;align-items:center;text-align:left;border:1px solid #e3e0d9;border-radius:6px;background:#faf9f5;padding:11px;gap:9px;width:100%}.unit-row.active{border-color:#997645;background:#fcf3e3}.unit-row:hover{border-color:#b29b77}.unit-icon{font-family:Georgia,serif;font-size:18px;font-weight:bold;display:grid;place-items:center;width:31px;height:31px;flex-shrink:0;border:1px solid #ded4c3;border-radius:50%;background:#f1ecdf}.unit-row .unit-info{flex:1;min-width:0}.unit-place{font-size:12px;font-weight:700}.unit-command{font-size:11px;color:#8d7755;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.unit-chevron{font-size:17px;color:#978b76}.editor-panel{background:#f6f5ee}.editor-title{font-family:Georgia,serif;font-size:21px;margin:12px 0}.order-modes{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:12px 0}.mode-btn{padding:10px 7px;font-size:11px;background:#fff;border:1px solid #d5d7ca;border-radius:5px}.mode-btn.active{background:var(--forest);color:white;border-color:var(--forest)}.field-label{display:block;color:#5c675f;font-size:11px;font-weight:700;margin:11px 0 6px}.order-select{display:block;width:100%;padding:10px 9px;background:white;color:var(--ink);border:1px solid #d5d6ca;border-radius:5px;font-size:12px}.editor-help{color:#788179;font-size:11px;line-height:1.5;margin:12px 0 0}.advance-section{padding:17px 18px 20px;background:#fffdf7}.progress-label{font-size:11px;color:#8b8578;margin-bottom:9px}.advance-button{width:100%;background:var(--forest);color:white;border:0;border-radius:5px;display:flex;align-items:center;justify-content:space-between;padding:15px 17px;font-size:13px;font-weight:700;letter-spacing:.02em}.advance-button:hover{background:#355b4f}.advance-button span{font-size:20px;font-weight:normal}.advance-footnote{font-size:11px;color:#89897f;line-height:1.55;margin-top:10px}.fine-print{background:#f7f3e8;border-bottom:0}.fine-print p{font-size:11px;line-height:1.55;color:#798077;margin:9px 0 0}.fine-print strong{color:#705e43}.bulletin{background:#fffdf8;border:1px solid #e1ded6;border-radius:7px;padding:18px;box-shadow:var(--shadow)}.bulletin-header{margin-bottom:10px}.text-button{background:none;border:none;color:#977e5e;text-decoration:underline;font-size:11px}.empty-report{color:#8e938b;font-style:italic;font-family:Georgia,serif}.report-list{max-height:400px;overflow:auto;display:grid;gap:7px}.report-entry{font-size:11px;border-left:3px solid #c6b394;background:#f7f5ee;padding:8px 10px;line-height:1.4}.report-entry.success{border-color:#73a18c}.report-entry.fail{border-color:#bd7263}.report-heading{font-family:Georgia,serif;font-size:15px;margin:10px 0}.choice-row{display:flex;gap:8px;align-items:center;margin:8px 0}.choice-row select{min-width:0;flex:1}.choice-row button{border:1px solid #c8b79e;background:#faf7ef;border-radius:4px;padding:8px}.stat-note{font-size:11px;color:#837f70;margin:10px 0}footer{font-size:11px;line-height:1.5;color:#92958b;margin:25px 0 10px;text-align:center}dialog{border:1px solid #c4b699;border-radius:9px;padding:0;max-width:540px;width:calc(100% - 30px);box-shadow:0 30px 100px #0005;background:#fffdf8}dialog::backdrop{background:#1e3129a9}.dialog-inner{padding:23px 28px 28px}.dialog-top{display:flex;justify-content:space-between;align-items:flex-start}.dialog-top h2{margin-bottom:16px}.dialog-inner p{line-height:1.6;color:#59655d;font-size:13px}.dialog-close{border:0;background:none;font-size:24px;color:#68716a}.rule-note{background:#f3f0e6;padding:12px;color:#776d59;font-size:11px;line-height:1.5;margin:15px 0}.dialog-inner .advance-button{margin-top:14px}
+*{box-sizing:border-box}html{background:var(--paper)}body{margin:0;color:var(--ink);font-family:system-ui,-apple-system,"Segoe UI",sans-serif;font-size:14px}button,select{font:inherit}button{cursor:pointer}button:disabled{cursor:not-allowed;opacity:.48}button:focus-visible,select:focus-visible{outline:3px solid #c18d40;outline-offset:2px}.topbar{min-height:82px;display:flex;align-items:center;justify-content:space-between;gap:18px;background:var(--forest);color:#f6f1e6;padding:13px clamp(16px,4vw,60px);border-bottom:3px solid #bd955d}.brand{display:flex;align-items:center;gap:13px}.brand-mark{font-size:36px;color:#dabb7d;line-height:1}.brand-title{font-family:Georgia,serif;font-size:23px;letter-spacing:.17em}.brand-tagline{font-size:10px;text-transform:uppercase;letter-spacing:.14em;color:#c5d3cb;margin-top:3px}.header-actions{display:flex;align-items:center;gap:8px;flex-wrap:wrap}.small-button{display:inline-flex;align-items:center;justify-content:center;background:#33534a;color:#f9f4e8;border:1px solid #668478;padding:9px 12px;border-radius:5px;font-size:12px;min-height:36px}.small-button:hover{background:#416459}.small-button.ghost{background:transparent;border-color:#81958a}.file-button{cursor:pointer}main{max-width:1810px;margin:0 auto;padding:28px clamp(15px,2.3vw,38px) 20px}.page-heading{display:flex;align-items:center;justify-content:space-between;gap:30px;margin-bottom:27px}.eyebrow,.section-kicker{font-size:10px;color:#9b7547;letter-spacing:.17em;font-weight:750;text-transform:uppercase}[hidden]{display:none!important}.victory-panel{background:#fff6df;border:2px solid #b99555;border-radius:9px;padding:16px 20px;margin:-8px 0 23px;box-shadow:0 8px 22px #372b1510}.victory-panel h2{margin:3px 0 6px;color:#694d23;font-size:25px}.victory-panel p{margin:4px 0 0;color:#685a44;line-height:1.45}.power-button.eliminated{opacity:.56;border-style:dashed}.power-button.eliminated .power-name{text-decoration:line-through}.elimination-summary{font-size:11px;color:#897965;margin:10px 0 0;line-height:1.5}.victory-panel .victory-eyebrow{font-weight:800;text-transform:uppercase;letter-spacing:.12em;font-size:10px;color:#9b7547}h1,h2,h3{font-family:Georgia,"Times New Roman",serif;font-weight:normal}h1{font-size:clamp(29px,3.2vw,46px);margin:9px 0 7px;line-height:1.05}h2{font-size:21px;margin:7px 0 0}.intro{color:var(--muted);margin:8px 0 0;max-width:800px;line-height:1.55}.date-panel{text-align:right;white-space:nowrap}.phase-pill{font-size:10px;letter-spacing:.1em;background:#e4d8b9;color:#625126;border-radius:25px;padding:6px 12px;font-weight:750}.date-label{font-family:Georgia,serif;font-size:21px;letter-spacing:.05em;margin-top:12px}.date-label span{color:#a47e4a}.game-layout{display:grid;grid-template-columns:minmax(0,1fr) 332px;gap:18px;align-items:start}.map-area,.sidebar{min-width:0}.panel-heading,.bulletin-header{display:flex;align-items:center;justify-content:space-between;gap:12px;margin:0 0 12px}.map-controls{display:flex;align-items:center;gap:8px;color:#7c786f;font-size:11px}.map-controls button{width:30px;height:30px;border:1px solid var(--line);background:white;border-radius:5px;color:var(--forest);font-size:20px;line-height:1}.map-viewport{border:1px solid #c9d0c6;border-radius:7px;background:#dce9e7;overflow:auto;box-shadow:var(--shadow);position:relative;max-height:min(76vh,820px);scrollbar-color:#b6c4bc transparent;touch-action:pan-x pan-y}.map-viewport svg{display:block;width:1320px;max-width:none;height:auto;user-select:none}.province{stroke:#b5b9ad;stroke-width:1.6;cursor:pointer;transition:fill .14s}.province:hover{stroke:#786544;stroke-width:3;filter:brightness(1.06)}.province.selected-cell{stroke:#a36d24;stroke-width:4}.province.legal-cell{stroke:#357a70;stroke-width:3;stroke-dasharray:5 4}.map-label{font-size:12px;font-weight:680;letter-spacing:1px;fill:#52645c;pointer-events:none;text-anchor:middle;dominant-baseline:central}.sea-label{font-size:12px;fill:#6a9298;font-weight:650;letter-spacing:1.2px}.center-occupied-rim{fill:#f9f3df;stroke:#7a7463;stroke-width:2;pointer-events:none}.center-dot{fill:#f9f3df;stroke:#7a7463;stroke-width:2;pointer-events:none}.unit-token{stroke:#fdf5df;stroke-width:3.6;cursor:pointer;filter:drop-shadow(0px 3px 2px #0003)}.unit-letter{font-size:20px;font-family:Georgia,serif;pointer-events:none;text-anchor:middle;dominant-baseline:central;font-weight:bold}.unit-selected{stroke:#f6c96d;stroke-width:7;filter:drop-shadow(0 0 7px #d18c34aa)}.unit-order-arrow{stroke:#aa682e;stroke-width:4;fill:none;marker-end:url(#arrow-head);pointer-events:none;stroke-dasharray:6 3}.map-footer{display:flex;align-items:center;gap:15px;flex-wrap:wrap;color:#737b70;font-size:11px;margin:11px 0 23px;line-height:1.45}.legend-circle{display:inline-block;width:11px;height:11px;border-radius:50%;margin-right:5px;vertical-align:-1px;border:2px solid #686f62}.unit-legend{background:#d17c73}.center-legend{background:#fff6d7}.legend-square{display:inline-block;width:10px;height:10px;background:#d4e7e8;margin-right:5px;border:1px solid #afcbcc}.map-note{flex:1;min-width:200px;text-align:right}.sidebar{background:var(--card);border:1px solid var(--line);border-radius:8px;box-shadow:var(--shadow);overflow:hidden}.side-section{padding:18px;border-bottom:1px solid var(--line)}.power-selector{padding-bottom:14px}.power-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px;margin-top:13px}.power-button{border:1px solid #e0ded6;border-radius:6px;background:#faf9f5;padding:10px 8px;min-height:52px;display:flex;align-items:center;gap:9px;color:var(--ink);text-align:left}.power-button:hover{border-color:#a3aa9d}.power-button.active{background:#eef1e9;border-color:var(--forest);box-shadow:inset 0 0 0 1px var(--forest)}.power-button .dot{flex-shrink:0;width:11px;height:11px;border-radius:50%;border:1px solid #0001}.power-button .power-name{font-weight:700;font-size:12px;line-height:1.2}.power-button .power-count{font-size:10px;color:#7c8077;margin-top:3px}.section-intro{font-size:12px;line-height:1.55;color:#788079;margin-top:10px}.unit-list{margin-top:12px;display:flex;flex-direction:column;gap:7px}.unit-row{display:flex;align-items:center;text-align:left;border:1px solid #e3e0d9;border-radius:6px;background:#faf9f5;padding:11px;gap:9px;width:100%}.unit-row.active{border-color:#997645;background:#fcf3e3}.unit-row:hover{border-color:#b29b77}.unit-icon{font-family:Georgia,serif;font-size:18px;font-weight:bold;display:grid;place-items:center;width:31px;height:31px;flex-shrink:0;border:1px solid #ded4c3;border-radius:50%;background:#f1ecdf}.unit-row .unit-info{flex:1;min-width:0}.unit-place{font-size:12px;font-weight:700}.unit-command{font-size:11px;color:#8d7755;margin-top:3px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}.unit-chevron{font-size:17px;color:#978b76}.editor-panel{background:#f6f5ee}.editor-title{font-family:Georgia,serif;font-size:21px;margin:12px 0}.order-modes{display:grid;grid-template-columns:repeat(2,1fr);gap:6px;margin:12px 0}.mode-btn{padding:10px 7px;font-size:11px;background:#fff;border:1px solid #d5d7ca;border-radius:5px}.mode-btn.active{background:var(--forest);color:white;border-color:var(--forest)}.field-label{display:block;color:#5c675f;font-size:11px;font-weight:700;margin:11px 0 6px}.order-select{display:block;width:100%;padding:10px 9px;background:white;color:var(--ink);border:1px solid #d5d6ca;border-radius:5px;font-size:12px}.editor-help{color:#788179;font-size:11px;line-height:1.5;margin:12px 0 0}.advance-section{padding:17px 18px 20px;background:#fffdf7}.progress-label{font-size:11px;color:#8b8578;margin-bottom:9px}.advance-button{width:100%;background:var(--forest);color:white;border:0;border-radius:5px;display:flex;align-items:center;justify-content:space-between;padding:15px 17px;font-size:13px;font-weight:700;letter-spacing:.02em}.advance-button:hover{background:#355b4f}.advance-button span{font-size:20px;font-weight:normal}.advance-footnote{font-size:11px;color:#89897f;line-height:1.55;margin-top:10px}.fine-print{background:#f7f3e8;border-bottom:0}.fine-print p{font-size:11px;line-height:1.55;color:#798077;margin:9px 0 0}.fine-print strong{color:#705e43}.bulletin{background:#fffdf8;border:1px solid #e1ded6;border-radius:7px;padding:18px;box-shadow:var(--shadow)}.bulletin-header{margin-bottom:10px}.text-button{background:none;border:none;color:#977e5e;text-decoration:underline;font-size:11px}.empty-report{color:#8e938b;font-style:italic;font-family:Georgia,serif}.report-list{max-height:400px;overflow:auto;display:grid;gap:7px}.report-entry{font-size:11px;border-left:3px solid #c6b394;background:#f7f5ee;padding:8px 10px;line-height:1.4}.report-entry.success{border-color:#73a18c}.report-entry.fail{border-color:#bd7263}.report-heading{font-family:Georgia,serif;font-size:15px;margin:10px 0}.choice-row{display:flex;gap:8px;align-items:center;margin:8px 0}.choice-row select{min-width:0;flex:1}.choice-row button{border:1px solid #c8b79e;background:#faf7ef;border-radius:4px;padding:8px}.stat-note{font-size:11px;color:#837f70;margin:10px 0}footer{font-size:11px;line-height:1.5;color:#92958b;margin:25px 0 10px;text-align:center}dialog{border:1px solid #c4b699;border-radius:9px;padding:0;max-width:540px;width:calc(100% - 30px);box-shadow:0 30px 100px #0005;background:#fffdf8}dialog::backdrop{background:#1e3129a9}.dialog-inner{padding:23px 28px 28px}.dialog-top{display:flex;justify-content:space-between;align-items:flex-start}.dialog-top h2{margin-bottom:16px}.dialog-inner p{line-height:1.6;color:#59655d;font-size:13px}.dialog-close{border:0;background:none;font-size:24px;color:#68716a}.rule-note{background:#f3f0e6;padding:12px;color:#776d59;font-size:11px;line-height:1.5;margin:15px 0}.dialog-inner .advance-button{margin-top:14px}
 @media(max-width:980px){.game-layout{grid-template-columns:minmax(0,1fr)}.sidebar{display:grid;grid-template-columns:1fr 1fr}.power-selector{grid-column:1/-1}.power-list{grid-template-columns:repeat(7,minmax(0,1fr))}.power-button{padding:8px 6px;flex-direction:column;text-align:center;min-height:67px}.power-button .power-name{font-size:10px}.side-section{border-right:1px solid var(--line)}.advance-section{display:flex;flex-direction:column;justify-content:center}.fine-print{grid-column:1/-1}.map-viewport{max-height:600px}}
 @media(max-width:620px){.topbar{align-items:flex-start;flex-direction:column;gap:11px;padding:14px 16px}.header-actions{gap:6px}.small-button{padding:7px 8px;font-size:11px;min-height:32px}.brand-title{font-size:20px}.brand-tagline{font-size:9px}.page-heading{align-items:flex-start;gap:10px;margin-bottom:18px}.date-label{font-size:15px}.phase-pill{font-size:9px;padding:5px 8px}h1{font-size:28px}.intro{font-size:12px}.sidebar{display:block}.power-list{grid-template-columns:repeat(4,1fr)}.power-button{flex-direction:row;text-align:left;min-height:52px}.map-footer{gap:7px 12px}.map-note{text-align:left;min-width:100%;}.map-viewport{max-height:500px}.bulletin{padding:14px}}
 
@@ -44,18 +44,19 @@
  </header>
  <main>
   <div class="page-heading">
-   <div><div class="eyebrow">THE EUROPEAN THEATRE · 1901</div><h1 id="mainTitle">The Great Powers</h1><p class="intro">Play as any of the seven Great Powers, or assign countries to a built-in computer opponent. Diplomacy and negotiations come next.</p></div>
+   <div><div class="eyebrow">THE EUROPEAN THEATRE</div><h1 id="mainTitle">The Great Powers</h1><p class="intro">Play as any of the seven Great Powers, or assign countries to a built-in computer opponent. Diplomacy and negotiations come next.</p></div>
    <div class="date-panel"><span id="phasePill" class="phase-pill">MOVEMENT</span><div id="dateLabel" class="date-label">SPRING <span>1901</span></div></div>
   </div>
+  <section class="victory-panel" id="victoryPanel" hidden aria-live="polite"><div class="victory-eyebrow">THE GAME IS OVER · SOLO VICTORY</div><h2 id="victoryTitle">A power has conquered Europe</h2><p id="victoryDescription">The game is complete.</p></section>
   <div class="game-layout">
    <section class="map-area">
     <div class="panel-heading"><div><span class="section-kicker">THE BOARD</span><h2>The European map</h2></div><div class="map-controls"><button id="zoomOut" title="Zoom out">−</button><span id="zoomPct">100%</span><button id="zoomIn" title="Zoom in">+</button></div></div>
     <div class="map-viewport" id="mapViewport" aria-label="Interactive schematic Diplomacy map"><svg id="gameMap" role="img" aria-label="Map of Diplomacy provinces and units" viewBox="0 0 1390 895"></svg></div>
-    <div class="map-footer"><span><i class="legend-circle unit-legend"></i> Army or fleet token</span><span><i class="legend-circle center-legend"></i> Supply center (ring when occupied)</span><span><i class="legend-square"></i> Sea area</span><span class="map-note">Schematic, not geographically exact · Switzerland is impassable · After winter, interior land shades show last occupier where no rival land borders it · Coasts mark distinct fleet destinations.</span></div>
+    <div class="map-footer"><span><i class="legend-circle unit-legend"></i> Army or fleet token</span><span><i class="legend-circle center-legend"></i> Supply center (ring when occupied)</span><span><i class="legend-square"></i> Sea area</span><span class="map-note">Schematic, not geographically exact · Switzerland is impassable · After winter, interior land shades show last occupier where no rival land borders it; eliminated powers fade from the map · Coasts mark distinct fleet destinations.</span></div>
     <section class="bulletin"><div class="bulletin-header"><div><span class="section-kicker">DISPATCHES</span><h2>After-action report</h2></div><button id="clearReport" class="text-button">Clear</button></div><div id="reportBody"><p class="empty-report">No orders have been resolved. Europe is holding its breath.</p></div></section>
    </section>
    <aside class="sidebar">
-    <section class="side-section power-selector"><div class="section-kicker">CHOOSE A POWER</div><div id="powerList" class="power-list"></div></section>
+    <section class="side-section power-selector"><div class="section-kicker">CHOOSE A POWER</div><div id="powerList" class="power-list"></div><p id="eliminationSummary" class="elimination-summary" hidden></p></section>
     <section class="side-section player-settings"><div class="section-kicker">PLAYER ASSIGNMENTS</div><p class="section-intro">Select which countries the computer will command. You can change this at any time.</p><div class="assignment-presets"><button class="assignment-preset" id="soloPreset" type="button">Solo as selected power</button><button class="assignment-preset" id="allHumanPreset" type="button">All human</button></div><div id="controllerList" class="controller-list"></div></section>
     <section class="side-section"><div class="section-kicker">ORDERS FOR <span id="powerTitle">AUSTRIA-HUNGARY</span></div><div class="section-intro">Select a unit to write its orders. Unassigned human units will hold. Computer orders are chosen when the turn resolves.</div><div id="unitList" class="unit-list"></div></section>
     <section class="side-section editor-panel" id="editorPanel"><div class="section-kicker">ORDER DESK</div><div id="editor"></div></section>
@@ -67,10 +68,10 @@
  </main>
  <dialog id="coastDialog" aria-labelledby="coastDialogTitle"><div class="dialog-inner"><div class="dialog-top"><div><div class="section-kicker">FLEET MOVEMENT</div><h2 id="coastDialogTitle">Choose a coast</h2></div><button class="dialog-close" id="closeCoast" aria-label="Cancel">×</button></div><p id="coastExplanation">Select the destination coast for your fleet.</p><div id="coastChoices" class="coast-choices"></div></div></dialog>
  <dialog id="helpDialog"><div class="dialog-inner"><div class="dialog-top"><div><div class="section-kicker">FIELD GUIDE</div><h2>How to play this prototype</h2></div><button class="dialog-close" id="closeHelp" aria-label="Close">×</button></div>
-  <p><strong>1. Assign players.</strong> Select a country, then use “Solo as selected power” to let the computer run the other six. Or mark individual countries Human or Computer. All-human hot seat play is still available. Your choices are saved with the game.</p>
+  <p><strong>1. Assign players.</strong> Select a country, then use “Solo as selected power” to let the computer run the other six. Or mark individual countries Human or Computer. All-human hot seat play is still available. A player with no units and no supply centers is eliminated. The first Great Power to hold at least 18 supply centers after a Fall wins immediately. Your choices are saved with the game.</p>
   <p><strong>2. Give human orders.</strong> Select a unit and choose Hold, Move, Convoy move (army), Convoy (sea fleet), Support hold, or Support move. Alternatively, click a unit on the map and then a highlighted province to order an ordinary move. Issue convoy moves from the order desk. Repeat for the other powers. You can leave units unassigned: they hold.</p>
   <p><strong>3. Resolve.</strong> The computer supplies legal orders for its countries only when you press Resolve; you can’t see its choices beforehand. Your own orders are never overwritten. The after-action report shows outcomes. If any units are dislodged, enter retreats; otherwise the game advances to the next phase.</p>
-  <p><strong>4. Continue.</strong> Computer powers automatically choose retreats, builds, and disbands. Fall supply-center capture and winter builds/disbands are implemented. Sea fleets can convoy armies to coastal provinces, including over multisea chains. A dislodged fleet breaks its convoy route unless another valid route survives.</p>
+  <p><strong>4. Continue.</strong> A power wins immediately after a Fall when it controls 18 of the 34 supply centers. Eliminated powers (no units and no centers) are noted, and their former non-center land shading is reassigned or becomes sepia where disputed. Computer powers automatically choose retreats, builds, and disbands. Fall supply-center capture and winter builds/disbands are implemented. Sea fleets can convoy armies to coastal provinces, including over multisea chains. A dislodged fleet breaks its convoy route unless another valid route survives.</p>
   <p><strong>5. Keep your game.</strong> Autosave stores the position on this device. Export a JSON backup to preserve it or import one later.</p>
   <div class="rule-note">Switzerland is impassable. Rome and Venice share a regular land border; armies can move directly between them. After each winter, non-supply-center land adopts the last occupant’s color unless adjacent to land shaded or owned by another power. This color has no rule effect. Convoys need an army order to move by convoy and matching orders from every fleet in a sea-route chain. The NC / SC / EC badges mark separate fleet-access coasts of St. Petersburg, Spain and Bulgaria. Province labels are abbreviated on the map. Hover or tap to select a province and read its full name in the order editor.</div>
   <button id="startBtn" class="advance-button">Enter the map <span>→</span></button></div></dialog>
@@ -275,7 +276,11 @@ function ensureVisualState(game){
 }
 function recordLandVisitors(game){
  ensureVisualState(game);
- for(const u of game.units)if(PROVINCES[u.at]?.kind==='l')game.lastVisitors[u.at]=u.power;
+ for(const u of game.units)if(PROVINCES[u.at]?.kind==='l'){
+  game.lastVisitors[u.at]=u.power;
+  // A real occupation supersedes any inferred post-elimination map shading.
+  if(game.eliminationRegions && !game.eliminated?.[u.power])delete game.eliminationRegions[u.at];
+ }
 }
 function applyWinterShading(game){
  ensureVisualState(game);
@@ -285,10 +290,100 @@ function applyWinterShading(game){
  for(const p of Object.values(PROVINCES)){
   if(p.kind!=='l')continue; // Never recolor water or supply centers.
   const visitor=game.lastVisitors[p.id];
-  if(!visitor)continue;
+  if(!visitor || game.eliminated?.[visitor] || game.eliminationRegions?.[p.id])continue;
   const besideAnotherPower=(ARMY_GRAPH[p.id]||[]).some(id=>{const owner=landOwner(id);return owner && owner!==visitor;});
   if(!besideAnotherPower)game.visualOwners[p.id]=visitor;
  }
+}
+
+// Endgame state is a rule; influence coloring is only a presentation layer.
+const SOLO_VICTORY_CENTERS=18;
+function centerCount(g,id){return Object.values(g.owned).filter(owner=>owner===id).length;}
+function eliminated(g,id){return Boolean(g.eliminated?.[id]);}
+function provinceInfluenceSource(g,id){
+ const p=PROVINCES[id];
+ if(!p || p.kind==='w')return null;
+ const idOwner=p.kind==='s'?g.owned[id]:g.eliminationRegions?.[id]?null:g.visualOwners?.[id];
+ return idOwner && !eliminated(g,idOwner)?idOwner:null;
+}
+function shadeFormerTerritories(g){
+ ensureVisualState(g);
+ const former=Object.keys(g.eliminationRegions||{});
+ if(!former.length)return;
+ // Use authentic (not inferred) surviving territories as sources in a
+ // shortest-path, land-only calculation. A disputed border is sepia.
+ const sources=new Map();
+ for(const p of Object.values(PROVINCES)){
+  const owner=provinceInfluenceSource(g,p.id);
+  if(owner)sources.set(p.id,owner);
+ }
+ for(const id of former){
+  const adjacent=new Set((ARMY_GRAPH[id]||[]).map(n=>sources.get(n)).filter(Boolean));
+  if(adjacent.size>1){g.visualOwners[id]=null;continue;}
+  let near=new Set(),min=Infinity;
+  const seen=new Set([id]),queue=[[id,0]];
+  for(let i=0;i<queue.length;i++){
+   const [at,d]=queue[i];if(d>min)break;
+   if(d>0 && sources.has(at)){
+    if(d<min){min=d;near=new Set();}
+    near.add(sources.get(at));continue;
+   }
+   for(const next of ARMY_GRAPH[at]||[]){
+    if(seen.has(next)||PROVINCES[next]?.kind==='w')continue;
+    seen.add(next);queue.push([next,d+1]);
+   }
+  }
+  g.visualOwners[id]=near.size===1?[...near][0]:null;
+ }
+}
+function discoverEliminations(g){
+ ensureVisualState(g);
+ g.eliminated ||= {};
+ g.eliminationRegions ||= {};
+ const newly=[];
+ for(const p of POWERS){
+  if(eliminated(g,p.id)||centerCount(g,p.id)>0)continue;
+  if(g.units.some(u=>u.power===p.id)||(g.retreats||[]).some(u=>u.power===p.id))continue;
+  g.eliminated[p.id]={year:g.year,season:g.season};newly.push(p.id);
+ }
+ if(newly.length){
+  for(const p of Object.values(PROVINCES)){
+   if(p.kind==='l'&&newly.includes(g.visualOwners[p.id])){
+    g.eliminationRegions[p.id]=g.visualOwners[p.id];
+    g.visualOwners[p.id]=null;
+   }
+  }
+  shadeFormerTerritories(g);
+ }
+ return newly;
+}
+function addEliminationDispatches(g,ids){
+ if(!ids.length)return;
+ const lines=ids.map(id=>`${POWERS.find(p=>p.id===id).name.toUpperCase()} ELIMINATED — no units or supply centers remain.`);
+ if(g.result?.logs)g.result.logs.push(...lines);
+ g.history.push({year:g.year,season:g.season,logs:lines});
+}
+function declareSoloVictory(g,restored=false){
+ if(g.victory)return false;
+ const champion=POWERS.find(p=>centerCount(g,p.id)>=SOLO_VICTORY_CENTERS);
+ if(!champion)return false;
+ const owned=centerCount(g,champion.id);
+ g.victory={power:champion.id,centers:owned,year:g.year,season:g.season,restored:Boolean(restored)};
+ g.phase='finished';g.orders={};delete g.retreats;delete g.retreatOrders;delete g.adjustOrders;
+ const line=`${champion.name.toUpperCase()} WINS — ${owned} of 34 supply centers (18 required).`;
+ if(!restored){
+  if(g.result?.logs)g.result.logs.push(line);
+  g.history.push({year:g.year,season:g.season,logs:[line]});
+ }
+ return true;
+}
+function reconcileEndgameOnLoad(g){
+ // Older autosaves may have progressed beyond 18 centers. Recognize them on
+ // opening without claiming to know the exact historical victory date.
+ discoverEliminations(g);
+ if(g.victory)g.phase='finished';
+ else declareSoloVictory(g,true);
+ shadeFormerTerritories(g);
 }
 
 function initialGame(){
@@ -546,9 +641,13 @@ function resolveRetreats(game){
  endSeason(game);return true;
 }
 function endSeason(game){
- if(game.season==='Spring'){game.season='Fall';game.phase='orders';}
- else{
+ if(game.season==='Spring'){
+  addEliminationDispatches(game,discoverEliminations(game));
+  game.season='Fall';game.phase='orders';
+ }else{
   for(const u of game.units){if(PROVINCES[u.at].kind==='s')game.owned[u.at]=u.power;}
+  addEliminationDispatches(game,discoverEliminations(game));
+  if(declareSoloVictory(game))return; // Win is settled after Fall ownership, before Winter.
   game.season='Winter';game.phase='adjust';game.adjustOrders={};
   if(POWERS.every(p=>difference(game,p.id)===0))finishWinter(game);
  }
@@ -590,7 +689,10 @@ function finishWinter(game){
   }
  }
  recordLandVisitors(game);
+ const lost=discoverEliminations(game);
+ for(const id of lost)logs.push(`${POWERS.find(p=>p.id===id).name.toUpperCase()} ELIMINATED — no units or supply centers remain.`);
  applyWinterShading(game);
+ shadeFormerTerritories(game);
  game.history.push({year:game.year,season:'Winter',logs});
  game.year++;game.season='Spring';game.phase='orders';game.orders={};game.adjustOrders={};game.result={year:game.year-1,season:'Winter',logs};return true;
 }
@@ -786,12 +888,13 @@ const STORAGE_KEY='diplomacy-1901-prototype-v1';
 let game=loadSaved();
 ensureVisualState(game);
 ensureControllers(game);
+reconcileEndgameOnLoad(game);
 let activePower='aus', selectedId=null, mapScale=1;
 const SVGNS='http://www.w3.org/2000/svg';
 let atlasCache=null;
 function loadSaved(){
  try{const value=JSON.parse(localStorage.getItem(STORAGE_KEY));
-  if(value && Array.isArray(value.units) && value.owned && ['orders','retreats','adjust'].includes(value.phase) && ['Spring','Fall','Winter'].includes(value.season))return value;
+  if(value && Array.isArray(value.units) && value.owned && ['orders','retreats','adjust','finished'].includes(value.phase) && ['Spring','Fall','Winter'].includes(value.season))return value;
  }catch(_){}
  return initialGame();
 }
@@ -812,24 +915,35 @@ function orderText(order){
 function escapeHTML(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
 function render(){
  if(game.phase==='orders' && !game.units.some(u=>u.id===selectedId && u.power===activePower))selectedId=game.units.find(u=>u.power===activePower)?.id||null;
- $('#mainTitle').textContent=game.phase==='orders'?'The Great Powers':game.phase==='retreats'?'After the Battle':'Winter Council';
- $('#phasePill').textContent=game.phase==='orders'?'MOVEMENT':game.phase==='retreats'?'RETREATS':'ADJUSTMENTS';
+ $('#mainTitle').textContent=game.phase==='finished'?'Victory in Europe':game.phase==='orders'?'The Great Powers':game.phase==='retreats'?'After the Battle':'Winter Council';
+ $('#phasePill').textContent=game.phase==='finished'?'GAME OVER':game.phase==='orders'?'MOVEMENT':game.phase==='retreats'?'RETREATS':'ADJUSTMENTS';
  $('#dateLabel').innerHTML=`${game.season.toUpperCase()} <span>${game.year}</span>`;
  $('#powerTitle').textContent=power(activePower).name.toUpperCase();
+ const banner=$('#victoryPanel');banner.hidden=!game.victory;
+ if(game.victory){
+  $('#victoryTitle').textContent=`${power(game.victory.power).name} wins!`;
+  $('#victoryDescription').textContent=`${game.victory.centers} of 34 supply centers controlled — 18 are required for a solo victory. ${game.victory.restored?'Victory recognized from this older saved position; the original winning season is unknown.':`Fall ${game.victory.year}.`} The board is now read-only. Export this position, or start a new game.`;
+ }
  renderPowers();renderControllers();renderUnits();renderEditor();renderAdvance();renderReport();drawMap();persist();
 }
 function renderPowers(){
- $('#powerList').innerHTML=POWERS.map(p=>`<button type="button" class="power-button ${activePower===p.id?'active':''} ${isComputer(game,p.id)?'computer-controlled':''}" data-power="${p.id}"><span class="dot" style="background:${p.color}"></span><span><div class="power-name">${escapeHTML(p.name)}</div><div class="power-count">${game.units.filter(u=>u.power===p.id).length} units · ${ownedCount(p.id)} SC ${isComputer(game,p.id)?'<em>· AI</em>':''}</div></span></button>`).join('');
+ $('#powerList').innerHTML=POWERS.map(p=>`<button type="button" class="power-button ${activePower===p.id?'active':''} ${isComputer(game,p.id)?'computer-controlled':''} ${eliminated(game,p.id)?'eliminated':''}" data-power="${p.id}"><span class="dot" style="background:${p.color}"></span><span><div class="power-name">${escapeHTML(p.name)}</div><div class="power-count">${game.units.filter(u=>u.power===p.id).length} units · ${ownedCount(p.id)} SC ${eliminated(game,p.id)?'<em>· Eliminated</em>':isComputer(game,p.id)?'<em>· AI</em>':''}</div></span></button>`).join('');
+ const defeated=POWERS.filter(p=>eliminated(game,p.id));
+ $('#eliminationSummary').hidden=!defeated.length;
+ $('#eliminationSummary').textContent=defeated.length?`Eliminated: ${defeated.map(p=>p.name+` (${game.eliminated[p.id].year})`).join(', ')}.`:'';
  $('#powerList').querySelectorAll('[data-power]').forEach(btn=>btn.onclick=()=>{activePower=btn.dataset.power;selectedId=game.units.find(u=>u.power===activePower)?.id||null;render()});
 }
 function renderControllers(){
  const root=$('#controllerList');
- root.innerHTML=POWERS.map(p=>`<div class="controller-item"><span class="controller-dot" style="background:${p.color}"></span><span class="controller-name" title="${escapeHTML(p.name)}">${escapeHTML(p.name)}</span><button class="controller-toggle ${isComputer(game,p.id)?'computer':''}" data-controller="${p.id}" type="button" aria-label="Change ${escapeHTML(p.name)} controller">${isComputer(game,p.id)?'AI':'Human'}</button></div>`).join('');
+ root.innerHTML=POWERS.map(p=>`<div class="controller-item"><span class="controller-dot" style="background:${p.color}"></span><span class="controller-name" title="${escapeHTML(p.name)}">${escapeHTML(p.name)}</span><button class="controller-toggle ${isComputer(game,p.id)?'computer':''}" data-controller="${p.id}" type="button" ${game.phase==='finished'||eliminated(game,p.id)?'disabled':''} aria-label="Change ${escapeHTML(p.name)} controller">${isComputer(game,p.id)?'AI':'Human'}</button></div>`).join('');
  root.querySelectorAll('[data-controller]').forEach(btn=>btn.onclick=()=>{const p=btn.dataset.controller;assignController(game,p,isComputer(game,p)?CONTROLLER_HUMAN:CONTROLLER_COMPUTER);render()});
  $('#soloPreset').textContent=`Solo as ${power(activePower).name}`;
+ $('#soloPreset').disabled=game.phase==='finished';$('#allHumanPreset').disabled=game.phase==='finished';
 }
 function renderUnits(){
  const root=$('#unitList');
+ if(game.phase==='finished'){root.innerHTML='<p class="stat-note">The game has ended. Units remain in their final positions; no further orders are possible.</p>';return;}
+ if(eliminated(game,activePower)){root.innerHTML='<p class="stat-note">This Great Power has been eliminated.</p>';return;}
  if(isComputer(game,activePower)){
   const count=game.phase==='orders'?game.units.filter(u=>u.power===activePower).length:game.phase==='retreats'?(game.retreats||[]).filter(u=>u.power===activePower).length:Math.abs(difference(game,activePower));
   root.innerHTML=`<div class="ai-notice"><strong>Computer controlled.</strong> ${count} ${game.phase==='orders'?'unit(s) will receive orders':game.phase==='retreats'?'retreat(s) will be decided':'winter adjustment(s) will be chosen'} automatically when you press the resolve button. Its plans stay sealed until then.</div>`;
@@ -863,6 +977,8 @@ function renderUnits(){
 }
 function renderEditor(){
  const root=$('#editor');
+ if(game.phase==='finished'){root.innerHTML='<p class="editor-help">Solo victory has been declared. Export the final position or begin a new game.</p>';return;}
+ if(eliminated(game,activePower)){root.innerHTML='<p class="editor-help">Eliminated powers cannot issue orders.</p>';return;}
  if(isComputer(game,activePower)){root.innerHTML='<p class="editor-help">This power is computer-controlled. Select a Human power to enter orders, or change its assignment above. The computer does not use any external AI service.</p>';return;}
  if(game.phase==='retreats'){root.innerHTML='<p class="editor-help">Choose retreats in the panel above for any dislodged units. A unit may not retreat to its attacker’s origin, an occupied province, or a standoff province.</p>';return;}
  if(game.phase==='adjust'){root.innerHTML='<p class="editor-help">The number of builds or disbands for each power is determined by the difference between its supply centers and units. Builds are allowed only in vacant, controlled original home centers.</p>';return;}
@@ -886,6 +1002,11 @@ function renderEditor(){
 }
 function renderAdvance(){
  const button=$('#advanceBtn'), hint=$('#advanceHint');
+ if(game.phase==='finished'){
+  $('#ordersCount').textContent='Final position · 18-center solo victory';
+  button.textContent='Game finished — victory declared';button.disabled=true;
+  hint.textContent='No further orders. You can export this game or begin a new one.';return;
+ }
  if(game.phase==='orders'){
   const humanUnits=game.units.filter(u=>!isComputer(game,u.power)),total=humanUnits.length,issued=humanUnits.filter(u=>game.orders[u.id]).length;
   $('#ordersCount').textContent=`${issued} of ${total} human units ordered · ${game.units.length-total} computer units`;
@@ -948,7 +1069,7 @@ function drawMap(){
  let svg='<defs><marker id="arrow-head" markerWidth="6" markerHeight="6" refX="5" refY="3" orient="auto"><path d="M0,0 L6,3 L0,6 z" fill="#aa682e"/></marker></defs><rect x="0" y="0" width="1390" height="895" fill="#d8e6e6"/>';
  for(const cell of atlasCache){
   const p=PROVINCES[cell.id],pwr=power(p.home);
-  let fill=p.kind==='w'?'#d8e6e8':pwr?mix('#f7f1e6',pwr.color,p.kind==='s'?.32:.19):p.kind==='s'?'#f0e4cc':'#ede9db';
+  let fill=p.kind==='w'?'#d8e6e8':p.kind==='s'?(pwr?mix('#f7f1e6',pwr.color,.32):'#f0e4cc'):'#ede9db';
   if(p.kind==='l' && game.visualOwners[p.id])fill=mix('#f7f1e6',power(game.visualOwners[p.id]).color,game.year>1901?.32:.19);
   if(p.kind==='s' && game.owned[p.id] && game.owned[p.id]!==p.home)fill=mix('#f5eee3',power(game.owned[p.id]).color,.4);
   const note=p.kind==='l' && game.visualOwners[p.id]?' · Visual influence: '+power(game.visualOwners[p.id]).name+' (not supply-center ownership)':'';
@@ -1010,6 +1131,7 @@ function mapClick(at){
  }
 }
 $('#advanceBtn').onclick=()=>{
+ if(game.phase==='finished')return;
  computerPreparePhase(game);
  if(game.phase==='orders')applyMovement(game);
  else if(game.phase==='retreats')resolveRetreats(game);
@@ -1019,7 +1141,7 @@ $('#advanceBtn').onclick=()=>{
 $('#resetBtn').onclick=()=>{if(confirm('Start a new game and replace the autosaved position? Export a save first if you want to keep it.')){const savedControllers={...game.controllers};game=initialGame();game.controllers=savedControllers;activePower=POWERS.find(p=>!isComputer(game,p.id))?.id||'aus';selectedId=null;render()}};
 $('#exportBtn').onclick=()=>{const blob=new Blob([JSON.stringify(game,null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download=`diplomacy-${game.season.toLowerCase()}-${game.year}.json`;document.body.appendChild(a);a.click();a.remove();setTimeout(()=>URL.revokeObjectURL(url),1000)};
 $('#importFile').onchange=async e=>{const file=e.target.files[0];if(!file)return;
- try{const loaded=JSON.parse(await file.text());if(!Array.isArray(loaded.units)||!loaded.owned||!['orders','retreats','adjust'].includes(loaded.phase)||!['Spring','Fall','Winter'].includes(loaded.season))throw Error('Not a valid game save');game=loaded;ensureVisualState(game);ensureControllers(game);selectedId=null;render();}catch(err){alert('Unable to import this game save: '+err.message)}e.target.value='';
+ try{const loaded=JSON.parse(await file.text());if(!Array.isArray(loaded.units)||!loaded.owned||!['orders','retreats','adjust','finished'].includes(loaded.phase)||!['Spring','Fall','Winter'].includes(loaded.season))throw Error('Not a valid game save');game=loaded;ensureVisualState(game);ensureControllers(game);reconcileEndgameOnLoad(game);selectedId=null;render();}catch(err){alert('Unable to import this game save: '+err.message)}e.target.value='';
 };
 $('#soloPreset').onclick=()=>{for(const p of POWERS)assignController(game,p.id,p.id===activePower?CONTROLLER_HUMAN:CONTROLLER_COMPUTER);render()};
 $('#allHumanPreset').onclick=()=>{for(const p of POWERS)assignController(game,p.id,CONTROLLER_HUMAN);render()};
